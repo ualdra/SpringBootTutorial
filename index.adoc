@@ -305,8 +305,12 @@ image::Postman3.png[title = "Lista de usuarios."]
 
 A elegir una de las siguientes opciones para realizar la práctica.
 
-*	Implementar un método que permita buscar un usuario mediante su apellido. TIP: Buscar métodos personalizados de JPA Repositories.
-*	Implementar un controlador para generar rutas personalizadas en nuestra API. TIP: @RestController.
+*	Implementar un método que permita buscar un usuario mediante su apellido. 
+[TIP]
+Buscar métodos personalizados de JPA Repositories.
+*	Implementar un controlador para generar rutas personalizadas en nuestra API. 
+[TIP]
+@RestController.
 *	Dotar de seguridad nuestra API Rest.
 *	Crear otra entidad (tabla) de nuestra base de datos y relacionarlas con una realacion 1 a muchos.
 *	Documentar de manera automática nuestra API mediante Swagger o Spring Rest Docs.
