@@ -228,8 +228,8 @@ Como veis hemos creado una clase user con los campos nombre, apellido, email y p
 
 Por último para la realización de este pequeño ejemplo vamos a crear un archivo que será la base de la creación de nuestra API Rest y donde se produce la magia de SpringBoot. Para ello crearemos el siguiente archivo.
 
-.Creamos archivo de Interface `UserRepository.java`,
-....
+.Creamos archivo de Interface `UserRepository.java`.
+====
 image::Eclipse4.png[]
 [source]
 ----
@@ -244,12 +244,12 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
 }
 ----
-....
+====
 
 Por último iremos a RestApplication.java y anotaremos la clase de la siguiente manera.
 
-.Modificamos archivo principal de la aplicacion `RestApplication.java`,
-....
+.Modificamos archivo principal de la aplicacion `RestApplication.java`.
+====
 [source]
 ----
 package ual.dra.rest;
@@ -269,7 +269,7 @@ public class RestApplication {
 	}
 }
 ----
-....
+====
 
 
 [NOTE]
