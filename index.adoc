@@ -1,7 +1,3 @@
-////
-NO CAMBIAR!!
-Codificación, idioma, tabla de contenidos, tipo de documento
-////
 :encoding: utf-8
 :lang: es
 :toc: right
@@ -11,14 +7,14 @@ Codificación, idioma, tabla de contenidos, tipo de documento
 :source-highlighter: rouge
 
 ////
-Nombre y título del trabajo
+Nombre - Titulo
 ////
 # SpringBoot
 Tutorial básico de SpringBoot
 Manel Mena <manel.mena@ual.es>
 
 
-// NO CAMBIAR!! (Entrar en modo no numerado de apartados)
+// Modo no numerado de apartados
 :numbered!: 
 
 
@@ -35,7 +31,7 @@ Resumen del tutorial de SpringBoot
 * Realizar una API Rest de manera rápida y sencilla con SpringBoot.
 * Probar la API con PostMan.
 
-// Entrar en modo numerado de apartados
+// Modo numerado
 :numbered:
 
 == Introducción 
