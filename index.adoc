@@ -9,9 +9,6 @@ Codificación, idioma, tabla de contenidos, tipo de documento
 :doctype: book
 :imagesdir: ./images
 
-
-
-
 ////
 Nombre y título del trabajo
 ////
@@ -55,36 +52,69 @@ A lo largo del desarrollo de la practica vamos a ver como realizar una pequeña 
 En la https://www.springboot.io[web oficial de Spring] es un buen punto de referencia si quereis profundizar en el tema de Spring en general.
 ====
 
-=== Versiones de Angular
+=== Preparando la máquina
 
-* Angular 1 o AngularJS (2010)
-* Angular 2 (2016). Incoroporó gran cantidad de cambios respecto a AngularJS. Los proyectos de AngularJS no son válidos en Angular 2.
-* Angular 4 (Marzo 2017). Incorpora algunas características nuevas respeto a Angular 2. En este caso sí hay compatibilidad.
-* Angular 5 (Noviembre 2017). Nue<va versión con nuevas características manteniendo compatibilidad.
+Lo primero es comprobar que tenéis instalado y funcionando el siguiente Software.
+
+*	JAVA 1.8
+*	Eclipse EE
+*	PostgreSQL (o cualquier otra base de datos SQL).
+*	Opcional: Docker.
 
 [NOTE]
 ====
-Angular y AngularJS son dos proyectos diferentes e incompatibles. Angular comprender las versiones desde Angular 2 en adelante. Actualmente, https://github.com/angular/angular.js[AngularJS] y https://github.com/angular/angular[Angular] siguen su desarrollo independiente.
+En nuestro caso la base de datos la vamos a levantar mediante Dockers, pero podéis utilizar una instalación local que tengáis en vuestro equipo, no obstante dedicaremos la sección uno a explicar de manera rápida como levantar un contenedor de Docker con PostgreSQL.
 ====
 
-== Configuración del entorno
+== Desarrollo
 
-Instalaremos lo siguiente:
+=== Aprovisionamiento de una base de datos mediante Docker.
 
-* https://git-scm.com/downloads[Git].
-* https://nodejs.org/en/[Node.js]. En Linux descargar el paquete de Node.js, moverlo a una carpeta `/opt/nodejs` y crearle un enlace simbólico en `/usr/bin/node` (`ln -s /opt/nodejs/bin/node /usr/bin/node`).
-* https://www.npmjs.com/[npm] como Gestor de paquetes para JavaScript. npm se distribuye con Node.js. 
-* Consola de Angular (https://cli.angular.io/[Angular CLI]) con `npm`.
+En esta sección os vamos a enseñar de manera muy rápida como aprovisionar una base de datos mediante Docker, lo cual servirá para que aprendáis como utilizar sistemas basados en contenedores.
 
-+
-`sudo npm install -g @angular/cli`
+Docker es un proyecto de código abierto que automatiza el despliegue de aplicaciones dentro de contenedores de software, proporcionando una capa adicional de abstracción y automatización de Virtualización a nivel de sistema operativo en Linux. Podemos llegar a pensar que es un concepto parecido a una maquina virtual, pero nada mas lejos de la realidad, al contrario que una máquina virtual la cual requiere mantener todos los recursos necesarios para su mantenimiento reservados por el sistema, Docker nos permite compartir un kernel entre todos los contenedores que levantemos lo cual conlleva un mejor aprovechamiento de recursos, así como un uso mas comedido de los mismos. Para realizar la práctica nos vamos a descargar la community edition de Docker la cual podréis instalar en el siguiente enlace.
 
-+
+https://www.docker.com/community-edition[Pagina de descarga de Docker]
+
+Una vez la tengáis instalado Docker en vuestro sistema reiniciaremos el equipo, acto seguido comprobaremos que esta todo bien instalado, para ello lanzaremos en consola la orden `docker --version` y comprobaremos que sale algo parecido a la imagen que tenemos a continuación.
+
+image::DockerVersion.png[title = "Versión de Docker"]
+
+Una vez tenemos instalado Docker en nuestro sistema vamos a realizar un uso básico de la plataforma para levantar un contenedor con PostgreSQL. Para ello muchas empresa ofrecen imágenes de Docker para utilizar su software las cuales podremos encontrar en https://hub.docker.com[Docker Hub]. Una vez estamos en Docker hub buscamos la imagen que nos interese, en nuestro caso vamos a utilizar la que aparece en el siguiente https://hub.docker.com/r/centos/postgresql-96-centos7/[enlace].
+
+En el enlace podemos ver una serie de instrucciones de como personalizar parámetros de la base de datos, pero vamos a centrarnos en un uso básico. Lo primero que vamos a hacer es bajar la imagen del contenedor para ello utilizaremos la orden 
+
+[source]
+----
+$ docker pull centos/postgresql-96-centos7
+----
+
+
+image::DockerPull.png[title = "Docker Pull"]
+
+Una vez descargada la imagen crearemos una carpeta donde lanzaremos la orden para levantar el contenedor, por el terminal nos crearemos una carpeta y dentro de ella crearemos otra llamada `data/`.
+
+image::mkDirData.png[title = "Creando carpeta data/"]
+
 [NOTE]
 ====
-La opción `-g` indicar que Angular CLI se instale globalmente por lo que lo podemos usar desde cualquier directorio.
+Creamos una carpeta `data/` para que los datos persistan en nuestra máquina local, y así poder llevarnos esos datos a cualquier otra máquina o hacerle copias de seguridad.
 ====
 
+Una vez tengamos las carpetas creadas nos situaremos dentro de la carpeta de dra y ejecutaremos la siguiente orden.
+
+[source]
+----
+$ docker run -d --name postgresql_database -e POSTGRESQL_USER=user -e POSTGRESQL_PASSWORD=pass -e POSTGRESQL_DATABASE=db -p 5432:5432 -v data:/var/lib/pgsql/data centos/postgresql-96-centos7
+----
+
+Una vez lancemos la orden ya tendremos levantada nuestra base de datos PostgreSQL en el puerto 5432 con usuario//contraseña user//pass y base de datos db. Para comprobar que se ha lanzado podéis utilizar la orden `docker ps` y os saldrá algo parecido a esto.
+
+image::DockerPs.png[title = "Listado de contenedores Docker"]
+
+Con esto ya estamos listos para comenzar nuestra aplicación Spring Boot.
+
+=== Creación de un proyecto de SpringBoot
 +
 .Angular CLI
 ****
