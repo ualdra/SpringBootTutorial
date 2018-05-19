@@ -115,6 +115,8 @@ image::DockerPs.png[title = "Listado de contenedores Docker"]
 Con esto ya estamos listos para comenzar nuestra aplicación Spring Boot.
 
 === Creación de un proyecto de SpringBoot
+
+
 +
 .Angular CLI
 ****
