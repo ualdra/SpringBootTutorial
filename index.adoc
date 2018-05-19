@@ -8,6 +8,7 @@ Codificación, idioma, tabla de contenidos, tipo de documento
 :toc-title: Tabla de contenidos
 :doctype: book
 :imagesdir: ./images
+:source-highlighter: rouge
 
 ////
 Nombre y título del trabajo
