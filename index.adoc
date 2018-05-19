@@ -41,7 +41,7 @@ Resumen del tutorial de SpringBoot
 
 Spring es un framework de Java que permite el desarrollo de aplicaciones web eficientes manteniendo un modelo MVC, hoy en día es el framework mas utilizado en JAVA según el Developer Survey de StackOverflow 2017. A su vez, se ofrecen innumerables ofertas de trabajo a la gente que domina este framework, dado que en el mundo empresarial también es uno de los mas utilizados dentro de tecnologías de desarrollo basadas en JAVA, y nos guste mas o menos JAVA sigue siendo el lenguaje orientado a objetos mas utilizado.
 
-image::StackOverflowPL.png[title = "Survey de lenguajes de programación StackOverflow 2018."]
+image::StackOverflowPL.png[]
 
 Uno de los mayores problemas que tiene un proyecto Spring es la cantidad de configuraciones que tenemos que realizar para adecuar nuestro proyecto a este framework, lo cual muchas veces es un lio. Spring Boot nace con el objetivo de realizar de manera rápida un proyecto de tipo Spring, sin tenernos que preocupar de dependencias, beans u otros archivos de configuración de nuestro proyecto. Gracias a ello podemos generar un proyecto de manera rápida y sencilla.
 
@@ -78,7 +78,7 @@ https://www.docker.com/community-edition[Pagina de descarga de Docker]
 
 Una vez la tengáis instalado Docker en vuestro sistema reiniciaremos el equipo, acto seguido comprobaremos que esta todo bien instalado, para ello lanzaremos en consola la orden `docker --version` y comprobaremos que sale algo parecido a la imagen que tenemos a continuación.
 
-image::DockerVersion.png[title = "Versión de Docker."]
+image::DockerVersion.png[]
 
 Una vez tenemos instalado Docker en nuestro sistema vamos a realizar un uso básico de la plataforma para levantar un contenedor con PostgreSQL. Para ello muchas empresa ofrecen imágenes de Docker para utilizar su software las cuales podremos encontrar en https://hub.docker.com[Docker Hub]. Una vez estamos en Docker hub buscamos la imagen que nos interese, en nuestro caso vamos a utilizar la que aparece en el siguiente https://hub.docker.com/r/centos/postgresql-96-centos7/[enlace].
 
@@ -90,11 +90,11 @@ $ docker pull centos/postgresql-96-centos7
 ----
 
 
-image::DockerPull.png[title = "Docker Pull."]
+image::DockerPull.png[]
 
 Una vez descargada la imagen crearemos una carpeta donde lanzaremos la orden para levantar el contenedor, por el terminal nos crearemos una carpeta y dentro de ella crearemos otra llamada `data/`.
 
-image::mkDirData.png[title = "Creando carpeta `data/`."]
+image::mkDirData.png[]
 
 [NOTE]
 ====
@@ -110,7 +110,7 @@ $ docker run -d --name postgresql_database -e POSTGRESQL_USER=user -e POSTGRESQL
 
 Una vez lancemos la orden ya tendremos levantada nuestra base de datos PostgreSQL en el puerto 5432 con usuario//contraseña user//pass y base de datos db. Para comprobar que se ha lanzado podéis utilizar la orden `docker ps` y os saldrá algo parecido a esto.
 
-image::DockerPs.png[title = "Listado de contenedores Docker."]
+image::DockerPs.png[]
 
 Con esto ya estamos listos para comenzar nuestra aplicación Spring Boot.
 
@@ -118,17 +118,17 @@ Con esto ya estamos listos para comenzar nuestra aplicación Spring Boot.
 
 Para crear un proyecto con todas las configuraciones predefinidas vamos a entrar en la página https://start.spring.io[start.spring.io] y poned las configuraciones que salen a continuación para añadir los paquetes solo tendréis que poner sus nombres en el campo de “Search for dependencies”.
 
-image::SpringInit.png[title = "Spring Initializer."]
+image::SpringInit.png[]
 
 Una vez seleccionemos las dependencias pulsaremos “Generate Project” esto hará que se descargue un .zip con nuestro proyecto, el cual descomprimiremos donde nos venga en gana.
 
 El siguiente paso será abrir nuestro eclipseEE e importar el proyecto descargado, para ello seleccionamo la opción de importar proyecto maven ya existente.
 
-image::Eclipse1.png[title = "Importar Existing Maven Project."]
+image::Eclipse1.png[]
 
 A continuación, seleccionamos la carpeta donde tengamos el proyecto, acto seguido nos aparecerá el pom del proyecto que creamos en la página de Spring.
 
-image::Eclipse2.png[title = "Localizar archivo `pom.xml`."]
+image::Eclipse2.png[]
 
 Luego tan solo le damos a finalizar y esperamos a que el proyecto termine el build.
 
@@ -230,7 +230,7 @@ Por último para la realización de este pequeño ejemplo vamos a crear un archi
 
 .Creamos archivo de Interface `UserRepository.java`,
 ====
-image::Eclipse4.png[title = "Creamos archivo de Interface `UserRepository.java`."]
+image::Eclipse4.png[]
 [source]
 ----
 package ual.dra.rest;
@@ -279,11 +279,11 @@ Cada vez que modifiquéis algo es interesante que hagáis un RunAs “Maven Clea
 
 Para lanzar la API nos basta con lanzar la aplicación como si fuese una app de consola, lo único que cuando nos de a elegir la clase con la que debemos lanzar la aplicación, la lancemos con RestApplication.
 
-image::Eclipse5.png[title = "Iniciar nuestra API Rest."]
+image::Eclipse5.png[]
 
 Como vemos a continuación cuando ejecutamos la aplicación se nos levantan una serie de rutas de manera automática.
 
-image::EclipseConsola.png[title = "Consola con rutas de nuestra API."]
+image::EclipseConsola.png[]
 
 Con algo tan sencillo como lo que estáis viendo hemos conseguido levantar una API Rest completamente funcional con todas las funciones CRUD.
 
@@ -291,15 +291,15 @@ Con algo tan sencillo como lo que estáis viendo hemos conseguido levantar una A
 
 El ultimo paso va a ser probarlo, para ello vamos a utilizar POSTMAN pero podéis usar cualquier programa que sirva para testear APIs Rest. Por defecto Spring Boot te va a generar una serie de métodos y rutas que cubren la funcionalidad CRUD de la entidad que hayamos creado, esas Rutas se pueden personalizar con el uso de controladores dentro de nuestra aplicación de Spring. No obstante nosotros para ver si funciona o no vamos a usar los métodos de la API tal y como están definidos por defecto. Al entrar en http://localhost:8080/api vemos las rutas definidas en nuestra API.
 
-image::Postman1.png[title = "Peticion Postman para ver las rutas."]
+image::Postman1.png[]
 
 Lo siguiente vamos a introducir un par de usuario.
 
-image::Postman2.png[title = "Post de un nuevo usuario."]
+image::Postman2.png[]
 
 Es interesante ver que lo estamos introduciendo como RAW data en el body de la Request de un método POST para introducir el usuario, el listado es simplemente tirar de la ruta mediante un GET, si quisiésemos ver solo un usuario nos basta con solo tirar del la id del mismo. 
 
-image::Postman3.png[title = "Lista de usuarios."]
+image::Postman3.png[]
 
 == Actividades
 
