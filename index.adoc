@@ -134,7 +134,7 @@ Luego tan solo le damos a finalizar y esperamos a que el proyecto termine el bui
 
 El siguiente paso es configurar la base de datos dentro de el archivo de propiedades del proyecto de SpringBoot mas concretamente en resources, en nuestro caso y dado que contamos con una base de datos PostgreSQL será lo siguiente.
 
-image::Eclipse3.png[title = "Configurar `application.properties`."]
+image::Eclipse3.png[]
 
 El siguiente paso que vamos a hacer es crear una clase de tipo POJO (Plain Old Java Object) la cual representará una tabla de la base de datos en la cual podremos ciertas anotaciones que permitan definir las propiedades para Spring Data JPA.
 
@@ -229,7 +229,7 @@ Como veis hemos creado una clase user con los campos nombre, apellido, email y p
 Por último para la realización de este pequeño ejemplo vamos a crear un archivo que será la base de la creación de nuestra API Rest y donde se produce la magia de SpringBoot. Para ello crearemos el siguiente archivo.
 
 .Creamos archivo de Interface `UserRepository.java`,
-====
+....
 image::Eclipse4.png[]
 [source]
 ----
@@ -244,12 +244,12 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
 }
 ----
-====
+....
 
 Por último iremos a RestApplication.java y anotaremos la clase de la siguiente manera.
 
 .Modificamos archivo principal de la aplicacion `RestApplication.java`,
-====
+....
 [source]
 ----
 package ual.dra.rest;
@@ -269,7 +269,7 @@ public class RestApplication {
 	}
 }
 ----
-====
+....
 
 
 [NOTE]
