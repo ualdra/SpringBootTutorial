@@ -139,9 +139,9 @@ image::Eclipse3.png[]
 
 El siguiente paso que vamos a hacer es crear una clase de tipo POJO (Plain Old Java Object) la cual representará una tabla de la base de datos en la cual podremos ciertas anotaciones que permitan definir las propiedades para Spring Data JPA.
 
-.Creacion del archivo POJO `User.java`,
+.Creacion del archivo POJO `User.java`.
 ====
-[source]
+[source,java]
 ----
 package ual.dra.rest;
 import java.io.Serializable;
@@ -232,7 +232,7 @@ Por último para la realización de este pequeño ejemplo vamos a crear un archi
 .Creamos archivo de Interface `UserRepository.java`.
 ====
 image::Eclipse4.png[]
-[source]
+[source,java]
 ----
 package ual.dra.rest;
 
@@ -251,7 +251,7 @@ Por último iremos a RestApplication.java y anotaremos la clase de la siguiente 
 
 .Modificamos archivo principal de la aplicacion `RestApplication.java`.
 ====
-[source]
+[source,java]
 ----
 package ual.dra.rest;
 
