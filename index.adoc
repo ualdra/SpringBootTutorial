@@ -1,0 +1,1063 @@
+////
+NO CAMBIAR!!
+Codificación, idioma, tabla de contenidos, tipo de documento
+////
+:encoding: utf-8
+:lang: es
+:toc: right
+:toc-title: Tabla de contenidos
+:doctype: book
+:imagesdir: ./images
+
+
+
+
+////
+Nombre y título del trabajo
+////
+# SpringBoot
+Tutorial básico de SpringBoot
+Manel Mena <manel.mena@ual.es>
+
+
+// NO CAMBIAR!! (Entrar en modo no numerado de apartados)
+:numbered!: 
+
+
+[abstract]
+== Resumen
+
+Resumen del tutorial de SpringBoot
+
+.Objetivos
+
+* Conocer la arquitectura de las aplicaciones de SpringBoot.
+* Realizar una pequeña introducción a Docker.
+* Aprender a usar SpringInitializer.
+* Realizar una API Rest de manera rápida y sencilla con SpringBoot.
+* Probar la API con PostMan.
+
+// Entrar en modo numerado de apartados
+:numbered:
+
+== Introducción 
+
+Spring es un framework de Java que permite el desarrollo de aplicaciones web eficientes manteniendo un modelo MVC, hoy en día es el framework mas utilizado en JAVA según el Developer Survey de StackOverflow 2017. A su vez, se ofrecen innumerables ofertas de trabajo a la gente que domina este framework, dado que en el mundo empresarial también es uno de los mas utilizados dentro de tecnologías de desarrollo basadas en JAVA, y nos guste mas o menos JAVA sigue siendo el lenguaje orientado a objetos mas utilizado.
+
+image::StackOverflowPL.png[title = "Survey de lenguajes de programación StackOverflow 2018"]
+
+Uno de los mayores problemas que tiene un proyecto Spring es la cantidad de configuraciones que tenemos que realizar para adecuar nuestro proyecto a este framework, lo cual muchas veces es un lio. Spring Boot nace con el objetivo de realizar de manera rápida un proyecto de tipo Spring, sin tenernos que preocupar de dependencias, beans u otros archivos de configuración de nuestro proyecto. Gracias a ello podemos generar un proyecto de manera rápida y sencilla.
+
+A lo largo del desarrollo de la practica vamos a ver como realizar una pequeña API Rest con Spring Boot de manera muy sencilla. Si queréis mas información tenéis una serie de tutoriales muy interesantes en a página del framework. http://www.spring.io
+
+[NOTE]
+====
+En la https://www.springboot.io[web oficial de Spring] es un buen punto de referencia si quereis profundizar en el tema de Spring en general.
+====
+
+=== Versiones de Angular
+
+* Angular 1 o AngularJS (2010)
+* Angular 2 (2016). Incoroporó gran cantidad de cambios respecto a AngularJS. Los proyectos de AngularJS no son válidos en Angular 2.
+* Angular 4 (Marzo 2017). Incorpora algunas características nuevas respeto a Angular 2. En este caso sí hay compatibilidad.
+* Angular 5 (Noviembre 2017). Nue<va versión con nuevas características manteniendo compatibilidad.
+
+[NOTE]
+====
+Angular y AngularJS son dos proyectos diferentes e incompatibles. Angular comprender las versiones desde Angular 2 en adelante. Actualmente, https://github.com/angular/angular.js[AngularJS] y https://github.com/angular/angular[Angular] siguen su desarrollo independiente.
+====
+
+== Configuración del entorno
+
+Instalaremos lo siguiente:
+
+* https://git-scm.com/downloads[Git].
+* https://nodejs.org/en/[Node.js]. En Linux descargar el paquete de Node.js, moverlo a una carpeta `/opt/nodejs` y crearle un enlace simbólico en `/usr/bin/node` (`ln -s /opt/nodejs/bin/node /usr/bin/node`).
+* https://www.npmjs.com/[npm] como Gestor de paquetes para JavaScript. npm se distribuye con Node.js. 
+* Consola de Angular (https://cli.angular.io/[Angular CLI]) con `npm`.
+
++
+`sudo npm install -g @angular/cli`
+
++
+[NOTE]
+====
+La opción `-g` indicar que Angular CLI se instale globalmente por lo que lo podemos usar desde cualquier directorio.
+====
+
++
+.Angular CLI
+****
+Angular CLI es una herramienta de interfaz de línea de comandos que permite crear proyectos, añadir archivos, y realizar tareas de desarrollo como testing, bundling y deployment.
+****
+
+== Creación de nuestra primera aplicación Angular
+
+. Desde el directorio de trabajo, crear un proyecto nuevo
+
++ 
+[source]
+----
+ng new pruebaAngular <1>
+cd pruebaAngular
+ng serve -o <2>
+----
+
++
+<1> Crea un diretorio y crea el proyecto. La operación de crear el proyecto llevará un tiempo mientras descarga los paquetes npm.
+<2> Servir el proyecto (`serve`) y abrir navegador con la aplicación (`-o`). El proyecto se sirve a través de un servidor web que incorpora Angular y que ofrece _live reload_, lo que permiteque la aplicación se recargue automáticamente al hacer cambios en los archivos fuente.
+
+
+. La aplicación está disponible en `http://locahost:4200`.
+
+image::WelcomeToApp.png[title = "Primera aplicación Angular de ejemplo"]
+
+
+.Versiones de Node.js, npm y Angular CLI usadas en este tutorial
+****
+Para este tutorial necesitamos Node.js > 6.9.x y npm > 3.x.x.
+[source]
+----
+$ node -v
+v8.9.4
+$ npm -v
+3.5.2
+$ ng -v
+
+    _                      _                 ____ _     ___
+   / \   _ __   __ _ _   _| | __ _ _ __     / ___| |   |_ _|
+  / △ \ | '_ \ / _` | | | | |/ _` | '__|   | |   | |    | |
+ / ___ \| | | | (_| | |_| | | (_| | |      | |___| |___ | |
+/_/   \_\_| |_|\__, |\__,_|_|\__,_|_|       \____|_____|___|
+               |___/
+    
+Angular CLI: 1.7.2
+Node: 8.9.4
+OS: linux x64
+Angular: 
+...
+
+----
+****
+
+== Organización de un proyecto Angular
+
+Los componentes son los bloques básicos de las aplicaciones Angular. Muestran datos en la pantalla, están atentos a la entrada del usuario, y realizan una acción en función de esa acción.
+
+image::AppComponents.png[title = "Organización de una aplicación en componentes"]
+
+Al crear el proyecto, Angular CLI ha creado el componente principal de la aplicación disponible en `src/app/app.component.ts`. Al definir un componente, definimos un `selector`, que es el luego se utilizará en la aplicación para incluir este componente. CLI define como  selector para este componente `app-root`. Este valor se puede modificar. 
+
+.Componente principal de la aplicación Angular
+====
+[source]
+----
+// src/app/component.ts
+
+import { Component } from '@angular/core';
+
+@Component({ <1>
+  selector: 'app-root', <2> 
+  templateUrl: './app.component.html', <3>
+  styleUrls: ['./app.component.css'] <4>
+})
+export class AppComponent { <5>
+  title = 'app';
+}
+----
+====
+
+<1> Objeto _metadata_ que describe las características del componente.
+<2> Selector del componente. Define una etiqueta HTML personalizada que la aplicación luego usará en los archivos HTML para incluir este componente (ver ejemplo siguiente).
+<3> Plantilla externa asociado al componente escrita en HTML.
+<4> Lista de hojas de estilos a aplicar al componente además de la propia de la aplicación (`src/styles.css`).
+<5> Exportación de la clase para que puedan ser usadas por otros componentes
+
+.Referencia a un selector
+====
+[source]
+----
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>PruebaAngular</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <app-root></app-root> <1>
+</body>
+</html>
+----
+====
+
+<1> Al incluir el selector `app-root` se incluirá en este archivo HTML su componente asociado `app-component` (ver ejemplo anterior).
+
+[NOTE]
+====
+También es posible incluir el código de la plantilla _inline_ en lugar de en un archivo externo. El código de la plantilla irá entre _backsticks_ o apóstrofes.
+
+[source]
+----
+// src/app/component.ts
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: ` <1>
+    <h1>
+      Welcome to {{ title }}
+    </h1>
+  `,
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'app';
+}
+----
+<1> Uso de `template` para definir la plantilla _inline_. No olvidar la coma del final si hay más elementos en los metadatos del componente.
+====
+
+
+=== Explorando el código
+
+Podemos cambiar el texto de bienvenida modificando `src/app/app.component.html`. Ahí vemos que aparece un encabezado `<h1>` con el texto que hemos visto al abrir la aplicación
+
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+  
+Lo cambiaremos por 
+
+  <h1>
+    Bienvenido a {{ title }}!
+  </h1>
+
+.Interpolación  
+****
+`{{title}}` es lo que se conoce como sintaxis de interpolación de binding. Se trata de un mecanismo por el podemos asignar un valor a un atributo dentro de un componente. Esta interporlación de binding conecta el componente TypeScript con la plantilla HTML presentando el valor de `title` en el HTML y toma valor en el momento de renderizar la página. En el ejemplo la asignación del valor se realiza en `src/app/app.component.ts`. Esto evita manpipular el DOM, ya sea directamente o mediante jQuery.
+
+[source]
+----
+  <h1>
+    Bienvenido a {{ title }}! <1>
+  </h1>
+----
+<1> Presentación (interpolación) del valor en `src/app/app.component.html` 
+
+[source]
+----
+  export class AppComponent {
+    title = 'app'; <2>
+  }
+----
+
+<2> Asignación del valor en `src/app/app.component.ts` 
+
+****
+
+Cambiaremos el valor de `title` en `src/app/app.component.ts` por `mi primera aplicación Angular`.
+
+  export class AppComponent {
+    title = 'mi primera aplicación Angular';
+  }
+ 
+El estilo del componente lo podemos cambiar en `src/app/app.component.css`. Añadiremos el estilo para `<h1>`.
+
+  h1 {
+    color: blue;
+    font-size: 250%;
+  }
+
+Tras estos cambios nuestra aplicación tiene un nuevo aspecto!!
+
+image:BienvenidoApp.png[] 
+
+[TIP]
+====
+Código del proyecto disponible en https://github.com/ualmtorres/pruebaAngular[GitHub]
+====
+
+.MVC en Angular
+****
+En Angular, el componente juega el rol de controlador y la plantilla representa la vista.
+****
+
+=== Archivos de configuración
+
+* `package.json`: Fichero de configuración de dependencias.
+* `tsconfig.json`: Fichero de configuración de Typescript, el lenguaje de interacción con Angular.
+* `angular-cli.json`: Este fichero sólo está disponible si el proyecto se ha creado con CLI. Establece nombres de carpetas, prefijo de la aplicación y los archivos que se incluyen al crear el proyecto.
+* `.editorconfig`: Parámetros de configuración para el editor respecto al proyecto (charset, tamaño del espacio de tabulación, ...)
+* `.gitignore`: Contiene la lista de archivos que no están sujetos a control de versiones del repositorio Git inicializado al crear el proyecto.
+
+[NOTE]
+====
+Angular CLI también ha incluido un archivo `README.md` con información de interés, como la creación de componentes (`ng generate component component-name`), build del proyecto (`ng build`) y ejecución de pruebas (`ng test`).
+====
+
+=== Estructura de carpetas
+
+- `e2e`. Carpeta para pruebas
+- `node_modules`. Contiene los paquetes instalados.
+- `src`. Contiene el código del proyecto. 
+    * `app`
+    * `assets`. Contiene las imágenes utilizadas en el proyecto.
+    * `environment`. Detalles acerca de los entornos de producción y desarrollo.
+
+=== Archivos importantes
+
+* `src/index.html`. Es el archivo que se muestra en el navegador. `<body>` contiene `<app-root></app-root>`. Este el el selector que se usa en el archivo `src/app/app.component.ts`, el cual mostrará el archivo `src/app/app.component.html`.
+
+* `src/app/app.module.ts`. Indica a Angular cómo construir la aplicación. También incluye los componentes que forman la aplicación.
+
+* `src/app/app.component.ts` es el componente inicial. En nuestro caso asigna el valor `app` a la variable `title` y muestra el contenido del template `app.component.html` aplicándole el estilo `app.component.css`.
+
+* `src/styles.css`. Estilos globales de la aplicación.
+
+* `src/test.ts` Punto de entra a los tests unitarios.
+
+== Creación de componentes
+
+Con Angular CLI también podemos añadir nuevos componentes a la aplicación (`ng generate component _new-component_`). 
+
+[source]
+----
+ng generate component heroes
+----
+
+Al crear un componente con Angular CLI ocurre lo siguiente:
+
+. Se modifica el archivo `src/app/app.module.ts` incluyendo el nuevo componente 
+
++
+[source]
+----
+import { HeroesComponent } from './app.component'; <1>
+...
+@NgModule({
+  declarations: [
+    ...
+    HeroesComponent, <2>
+    ...
+  ],
+  ...
+  bootstrap: [AppComponent], <3>
+  ...
+----
+<1> Importación del nuevo componente
+<2> Declaración del nuevo componente
+<3> Especificación del componente inicial de la aplicación
+
+. Se añade una carpeta a `src/app` con el nombre del nuevo componente (`heroes`). La nueva carpeta incluye los archivos TypeScript, HTML y CSS del nuevo componente:
+
+* `heroes.component.css`
+* `heroes.component.html`
+* `heroes.component.spec.ts`
+* `heroes.component.ts`
+
+.Archivo TypeScript del componente creado
+====
+[source]
+----
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+	selector: 'app-heroes',
+	templateUrl: './heroes.component.html',
+	styleUrls: ['./heroes.component.css']
+})
+export class HeroesComponent implements OnInit {
+
+	constructor() { }
+
+	ngOnInit() {
+	}
+}
+----
+====
+
+En el archivo de la clase del componente encontramos un _decorador_ `@Component` que especifica los metadatos para el componente. Angular CLI genera tres propiedades de estos metadatos:
+
+* `selector`: Selector para el componente. Es el nombre que se usar para hacer referencia al componente desde una plantilla que incluya este componente.
+
++
+[NOTE]
+====
+El selector tiene que ser único para que pueda ser referenciado sin equívoco desde cualquier plantilla HTML. El valor predeterminado para configurar el nombre del selector es `app-_nombreComponente_`. En este caso el componente `heroes` da lugar al selector `app-heroes`. No obstante, este valor puede ser modificado y asignarle otro nombre asegurando siempre que sea único.
+====
+
+* `templateUrl`: Archivo HTML de la plantilla del componente
+* `styleUrls`: Array de archivos de estilos CSS propios del componente
+
+Como consideración adicional:
+
+* La clase del componente se exporta para que otro componente pueda importarla.
+* La clase incluye el constructor `constructor()` para que lo podamos personalizar.
+* La clase incluye el método `ngOnInit()` para colocar en él cualquier código de inicialización necesaria para el componente.
+
+## Creación de una aplicación de galería de imágenes
+
+[source]
+----
+ng new mygallery
+----
+
+[TIP]
+====
+En lugar de tener que descargar todos los paquetes cada vez que quieras crear un proyecto, puedes tener un proyecto como base actualizado para replicar cada vez que tengas que crear un nuevo proyecto. Luego bastaría con hacer unos ligeros cambios para adaptarlo al nuevo proyecto. Los cambios se tendrían que hacer en:
+
+* `angular-cli.json`. Modificar el elemento `name` de `project`.
+* `app.e2e-spec.ts`. Modificar la cadena del parámetro en el método `describe`
+* `package.json`. Modificar el elemento `name`
+* `README.md`. Modificar el título del documento
+* `index.html`. Modificar el `<title>`
+====
+
+.Actualización de dependencias
+****
+
+Para actualizar las dependencias de un proyecto tendremos que tener instalado previamente el comprobador de dependencias de Node.js. Lo instalaremos con 
+
+[source]
+----
+sudo npm install -g npm-check-updates
+----
+
+Después, el comando `ncu` ejecutado sobre la carpeta del proyeto a actualizar nos devolverá las dependencias a actualizar y nos indicará cómo proceder para realizar la actualización en caso de ser necesario
+
+[source]
+----
+$ ncu 
+
+ @types/node   ~6.0.60  →  ~9.4.7 
+ jasmine-core   ~2.8.0  →  ~3.1.0 
+ protractor     ~5.1.2  →  ~5.3.0 
+ ts-node        ~4.1.0  →  ~5.0.1 
+ typescript     ~2.5.3  →  ~2.7.2 
+
+Run ncu with -u to upgrade package.json
+----
+****
+
+### Un primer prototipo
+
+#### Usar Bootstrap en el proyecto
+
+En la https://getbootstrap.com/[web de Boostrap] encontraremos las indicaciones para usar Boostrap en un proyecto. Aquí utilizaremos la opción Boostrap CDN y colocaremos el enlace en `index.html`
+
+[source]
+----
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+----
+
+#### Crear la barra de navegación
+
+En primer lugar creamos el componente para la barra de navegación.
+
+[source]
+----
+ng generate component navbar --flat <1>
+----
+<1> El flag `--flat` evita la creación de una carpeta `navbar` para los archivos del componente. En este caso, los archivos se situarán dentro de la carpeta `app`.
+
+
+[NOTE]
+====
+Recuerda que al crear el componente con Angular CLI, además de crearse los archivos del componente, se actualiza `app.module.ts`.
+
+[source]
+----
+$ ng generate component navbar --flat
+  create src/app/navbar.component.css (0 bytes)
+  create src/app/navbar.component.html (25 bytes)
+  create src/app/navbar.component.spec.ts (628 bytes)
+  create src/app/navbar.component.ts (269 bytes)
+  update src/app/app.module.ts (391 bytes) <1>
+----
+<1> `app.module.ts` ha sido actualizado para importar el nuevo componente y añadirlo a las declaraciones.
+====
+
+A continuación, incluimos en el archivo `navbar.component.html` el código para crear una barra de navegación disponible en la https://getbootstrap.com/docs/4.0/components/navbar/[documentación de Boostrap para crear barras de navegación]. Haremos unos pequeños cambios para personalizarla y que quede de esta forma. El código está disponible en el https://github.com/ualmtorres/mygallery[repositorio GitHub del proyecto].
+
+image::NavBar.png[]
+
+Por último, incluiremos el componente de la barra creada en su componente padre. Para ello, modificamos el archivo `app-component.html` para incluir el selector de la barra de navegación reemplazando su contenido por 
+
+[source]
+----
+<app-navbar></app-navbar>
+----
+
+#### El componente de la galería
+
+Crearemos un componente para la galería con Angular CLI.
+
+[source]
+----
+ng generate component gallery
+----
+
+Como ya sabemos, se creará una carpeta con los archivos del componente y se actualizará `app.module.ts`
+
+Por ahora, la galería mostrará una serie estática de imágenes. Añadiremos el código siguiente a `gallery.component.html`
+
+[source]
+----
+<div class="container">
+  <div class="row">
+    <a href = "#">
+      <div class = "col-md-3 col-sm-4 col-xs-6"><img class="img-responsive" src="https://images.pexels.com/photos/9051/pexels-photo.jpg?h=150" /></div>
+    </a>
+    <a href = "#">
+      <div class = "col-md-3 col-sm-4 col-xs-6"><img class="img-responsive" src="https://images.pexels.com/photos/23475/pexels-photo.jpg?h=150" /></div>
+    </a>
+    <a href = "#">
+      <div class = "col-md-3 col-sm-4 col-xs-6"><img class="img-responsive" src="https://images.pexels.com/photos/9050/pexels-photo.jpg?h=150" /></div>
+    </a>
+    <a href = "#">
+      <div class = "col-md-3 col-sm-4 col-xs-6"><img class="img-responsive" src="https://images.pexels.com/photos/754998/pexels-photo-754998.jpeg?h=150" /></div>
+    </a>
+  </div>
+</div>
+----
+
+Y definiremos estos estilos en `gallery.component.css` para el componente definido
+
+[source]
+----
+img {
+    box-shadow: 0px 1px 6px 1px gray;
+    margin-bottom: 30px;
+}
+img:hover {
+    -webkit-filter: grayscale(1);
+}
+----
+
+Por último, añadimos el tag del componente gallery `<app-gallery>` a su componente padre `app.component.html` para mostrar la galería
+
+[source]
+----
+<app-navbar></app-navbar>
+<app-gallery></app-gallery>
+----
+
+El resultado debería ser algo similar a este:
+
+image:MyGallery.png[]
+
+### Mejora de la aplicación. Separación de datos y presentación
+
+Hasta ahora, la galería de imágenes está almacenando de forma conjunta los datos de las imágenes y su presentación. En este apartado estructuraremos la galería con esta relación jerárquica de componentes. 
+
+[pre]
+----
+gallery
+|_image-list
+  |_image
+----
+
+A continuación crearemos un subcomponente de `gallery` al que denominaremos `image-list`. Lo denominamos subcomponente porque lo creareamos dentro de `gallery` y no dentro de `app`.
+
+También crearemos un subcomponente de `image-list` al que denominaremos `image`. En este caso usaremos el parámetro `--flat` para indicar a Angular CLI que no cree una carpeta aparte para el componente, sino que cree los archivos en la misma ruta desde la que se está creando.
+
+[source]
+----
+cd src/app/gallery
+ng generate component image-list
+
+cd image-list
+ng generate component image --flat
+----
+
+La estrucuctura de archivos de `gallery` deberá ser así:
+
+[pre]
+----
+gallery/
+├── gallery.component.css
+├── gallery.component.html
+├── gallery.component.spec.ts
+├── gallery.component.ts
+└── image-list
+    ├── image.component.css
+    ├── image.component.html
+    ├── image.component.spec.ts
+    ├── image.component.ts
+    ├── image-list.component.css
+    ├── image-list.component.html
+    ├── image-list.component.spec.ts
+    └── image-list.component.ts
+----
+
+[WARNING]
+====
+El haber creado los archivos del componente `image` dentro del mismo directorio que `image-list` no contraviene el que los componentes tengan luego en la presentación (HTML) la relación jerárquica `image-list` _está formado por_ `image`.
+====
+
+[TIP]
+====
+El código está disponible en el https://github.com/ualmtorres/mygallerymodel[repositorio GitHub del proyecto].
+====
+
+#### Creación del modelo
+
+Pese a no ser obligatorio, es conveniente que los modelos de una aplicación estén agrupados dentro de un mismo directorio. En nuestro caso, crearemos un directorio `models` dentro del directorio `app`. Desde `models` crearemos una clase `image` con Angular CLI. Esto creará un archivo TypeScript (`image.ts`) para la clase dentro de `models`.
+
+[source]
+----
+ng generate class image
+----
+
+Dentro de la clase definiremos su constructor 
+
+[source]
+----
+constructor(public imageURL: string, public author: string, public website: string) {}
+----
+
+[NOTE]
+====
+El componente `image` corresponde al _Modelo_ en el patrón MVC
+====
+
+#### Refactorización de `gallery.component.html`
+
+El código de `gallery.component.html` será sustituido por el selector del componente `image-list`. Su código ahora se distribuirá entre las plantillas y las clases de los componentes `image-list` e `image.
+
+.`gallery.component.html` refactorizado
+====
+[source]
+----
+<app-image-list></app-image-list>
+----
+====
+
+#### Separación de los datos de la presentación mediante `image-list.component.ts` 
+
+Este componente está dedicado a inicializar los valores de la lista de imágenes a mostrar (URLs de las imágenes, autores, ...)
+
+[source]
+----
+import { Component, OnInit } from '@angular/core';
+import { Image } from '../../models/image'; <1>
+
+@Component({
+  selector: 'app-image-list',
+  templateUrl: './image-list.component.html',
+  styleUrls: ['./image-list.component.css']
+})
+export class ImageListComponent implements OnInit {
+  images: Image[] = [ <2>
+    {'imageURL':'https://images.pexels.com/photos/9051/pexels-photo.jpg?h=150', 'author':'Oliur Rahman', 'website':'http://photos.oliur.com'},
+    {'imageURL':'https://images.pexels.com/photos/23475/pexels-photo.jpg?h=150', 'author':'Donald Tong', 'website':''},
+    {'imageURL':'https://images.pexels.com/photos/9050/pexels-photo.jpg?h=150', 'author':'Pixabay', 'website':'http://pixabay.com'},
+    {'imageURL':'https://images.pexels.com/photos/754998/pexels-photo-754998.jpeg?h=150', 'author':'Tarun Netha Amballa', 'website':''}
+  ];
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+}
+----
+<1> Importación de a clase imagen para poder crear un array de objetos `image`
+<2> Creación del array de objetos `image`. Los objetos `image` se pueden crear en JSON o con `new Image(_param1_, _param2_, ...)`
+
+#### Presentación de la lista de imágenes
+
+Para presentar la lista de imágenes nos valdremos de la directiva `* ngFor` 
+
+.Directiva * ngFor
+****
+La directiva `*ngFor` (no olvidar el asterisco) instancia una plantilla una vez por cada elemento de un iterable.
+
+[source]
+----
+<ul>
+<li *ngFor="let i of [1,2,3]">Elemento {{i}}</li>
+</ul>
+----
+
+devuelve
+
+* Elemento 1
+* Elemento 2
+* Elemento 3
+****
+
+La plantilla de la lista de imaǵenes iterará sobre el array `images` del componente. Además, interactuará con el componente `image` para pasarle en cada iteración la imagen a presentar. Para indicar que se quiere pasar un objeto al componente `app-image`, el objeto se encerrará entre corchetes (p.e `[image]`).
+
+Consulta la https://angular.io/guide/component-interaction[documentación oficial de Angular] para saber más de la interacción de componentes.
+
+.`image-list.component.html`
+====
+[source]
+----
+<div class="container">
+  <div class="row">
+    <app-image *ngFor="let image of images" [image]="image"></app-image> <1>
+  </div>
+</div>
+----
+<1> `[image]` indica una interacción con el componente `<app-image>`. En `<app-image>` se recibirá el objeto en `[image]`. `[image]` toma en cada iteración una imagen (`image`) del bucle `* ngFor` 
+====
+
+#### El componente para la imagen
+
+El componente para la imagen recibe de `image-list.component.html` una propiedad de entrada (`[image]`) con un decorador `@Input`. Por tanto, el componente tendrá que importar `Input` de `@angular/core`.
+
+.`image.component.ts`
+====
+[source]
+----
+import { Component, OnInit, Input } from '@angular/core'; <1>
+import { Image } from '../../models/image'; <2>
+
+@Component({
+  selector: 'app-image',
+  templateUrl: './image.component.html',
+  styleUrls: ['./image.component.css']
+})
+export class ImageComponent implements OnInit {
+  @Input() image: Image; <3>
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+}
+----
+<1> Importación de Input
+<2> Importación de la clase de la imagen para poder usarla
+<3> Propiedad de entrada `image` enviada desde `image-list.component.html`
+====
+
+#### Presentación de la imagen
+
+Ya sólo queda usar las interpolación para presentar los datos de ima imagen. Esto lo haremos accediendo a la propiedad `imageURL` de `image`.
+
+.`image.component.html`
+====
+[source]
+----
+<a href = "#">
+    <div class = "col-md-3 col-sm-4 col-xs-6"><img class="img-responsive" src="{{image.imageURL}}" /></div>
+</a>
+----
+====
+
+[NOTE]
+====
+Como los estilos para las imágenes estaban en `gallery.component.css` las imágenes han perdido su estilo. Basta con mover los estilos definidos a `image.component.css`.
+====
+
+### Mejora de la aplicación. Creación de un servicio
+
+El problema que tiene actualmente la aplicación de galería de imágenes es que el componente de galería de imágenes sabe demasiado acerca de la cómo construir la lista de imágenes. Es más, tiene encargado la construcción de la lista de imágenes a partir de sus datos.
+
+La solución está en delegar el trabajo de crear la lista de imágenes a otro componente y crear lo que se conoce como un _servicio_. Un servicio nos va a permitir ocultar los detalles acerca de cómo recuperar datos y compartir datos entre componentes de nuestra aplicación.
+
+Desde el directorio base del proyecto crearemos un servicio denominado `image` con Angular CLI. Esto creará los archivos TypeScript (`image.service.ts` e `image.service.spec.ts`) para el servicio dentro de `services`
+
+[source]
+----
+ng generate service image --module=app <1>
+----
+<1> Creación del servicio `image` y actualización de `app.module.ts` con los datos del servicio `image`.
+
+[WARNING]
+====
+Para que este servicio pueda ser más adelante siguiendo el patrón de _Inyección de dependencias_ el servicio tiene que ser importado en `app.module.ts` y registrado en la lista de `providers`.
+====
+
+.Fragmento de `app.module.ts` tras definir el servicio `image`
+====
+[source]
+----
+....
+import { ImageService } from './image.service';
+....
+@NgModule({
+  ....
+  providers: [ImageService],
+  ....
+})
+....
+----
+====
+
+.`image.service.ts`
+====
+[source]
+----
+import { Injectable } from '@angular/core';
+import { Image } from './models/image'; <1> Importar modelo imagen
+
+@Injectable() <2>
+export class ImageService {
+  images: Image[] = [ <3>
+    {'imageURL':'https://images.pexels.com/photos/9051/pexels-photo.jpg?h=150', 'author':'Oliur Rahman', 'website':'http://photos.oliur.com'},
+    {'imageURL':'https://images.pexels.com/photos/23475/pexels-photo.jpg?h=150', 'author':'Donald Tong', 'website':''},
+    {'imageURL':'https://images.pexels.com/photos/9050/pexels-photo.jpg?h=150', 'author':'Pixabay', 'website':'http://pixabay.com'},
+    {'imageURL':'https://images.pexels.com/photos/754998/pexels-photo-754998.jpeg?h=150', 'author':'Tarun Netha Amballa', 'website':''}
+  ];
+  constructor() { }
+
+  getImages() { <4>
+    return this.images;
+  }
+}
+----
+<1> Importar modelo `image` 
+<2> El decorador `@Injectable` indica que este servicio puede tener dependencias inyectadas.
+<3> Inicializar array de imágenes
+<4> Creación de un método que devuelva el array de imágenes
+====
+
+.`image-list.component.ts`
+====
+[source]
+----
+import { Component, OnInit } from '@angular/core';
+import { Image } from '../../models/image';
+import { ImageService } from '../../image.service'; <1>
+
+@Component({
+  selector: 'app-image-list',
+  templateUrl: './image-list.component.html',
+  styleUrls: ['./image-list.component.css']
+})
+export class ImageListComponent implements OnInit {
+  images: Image[] = []; <2>
+
+  constructor(private imageService: ImageService) { } <3>
+
+  ngOnInit() {
+    this.images = this.imageService.getImages(); <4>
+  }
+
+}
+----
+<1> Importación del componente del servicio
+<2> Declaración del array de imágenes
+<3> Modiifcación del constructor para incluir el servicio de imágenes
+<4> Inicialización del array de imágenes con lo que devuelva el servicio
+====
+
+De esta forma hemos conseguido aislar el componente de lista de imágenes de los detalles de cómo obtener la lista de imágenes. Ahora, el componente sólo se limita a usar el servicio de imágenes para obtener la lista de imágenes.
+
+==== Mostrando los detalles de una imagen
+
+En este apartado veremos cómo implementar la funcionalidad de mostrar los detalles de una imagen al hacer clic sobre ella.
+
+. Añadir el evento de clic a `image-list.component.html`. Al hacer clic sobre una imagen llamaremos a un método `onSelect()` pasándole como argumento la imagen seleccionada
+
++
+[source]
+----
+<app-image *ngFor="let image of images" [image]="image" (click)="onSelect(image)"></app-image>
+----
+
+. Añadir a `image-list.component.ts` una variable de instancia de tipo `Image` denominada `selectedImage`. Esta variable representa la imagen seleccionada de la lista
+
++ 
+[source]
+----
+....
+export class ImageListComponent implements OnInit {
+  images: Image[] = [];
+  selectedImage: Image;
+  ....
+}
+----
+
+. Añadir a `image-list.component.ts` el método `onSelect()` que inicialice `selectedImage` con la imagen seleccionada.
+
++ 
+[source]
+----
+  onSelect(image: Image) {
+    this.selectedImage = image;
+  }
+----
+
+. Añadir en la parte superior de `image-list.component.html` el selector de la imagen de detalle (`app-image-detail`) para mostrar el detalle de las imágenes en la parte superior de la lista de imágenes. Este elemento pasará al componente `ImageDetail` la imagen seleccionada mediante `[selectedImage]` que será recibida mediante `@Input()`.
+
++
+[source]
+----
+<app-image-detail [selectedImage]="selectedImage"></app-image-detail>
+----
+
+. Añadir a `image-detail.component.ts` la recepción de `selectedImage`.
+
++
+[source]
+----
+import { Component, OnInit, Input } from '@angular/core'; <1>
+import { Image } from '../../models/image'; <2>
+
+@Component({
+  selector: 'app-image-detail',
+  templateUrl: './image-detail.component.html',
+  styleUrls: ['./image-detail.component.css']
+})
+export class ImageDetailComponent implements OnInit {
+  @Input() selectedImage: Image; <3>
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+}
+----
+<1> Importar `Input`
+<2> Importar el modelo de la imagen para poder usarlo
+<3> Variable de instancia creada a partir del valor recibido
+
+. Mostrar los detalles en `image-detail.component.html`
+
++
+[source]
+----
+<div class="container image-detail"> <1>
+  <div class = "row">
+    <div class = "col-sm-6 col-xs-12">
+      <img class="img-responsive" src="{{selectedImage.imageURL}}" /> <2>
+    </div>
+    <div class = "col-sm-6 col-xs-12">
+      <h1>{{selectedImage.author}}</h1> <3>
+      <h2><a href = "{{selectedImage.website}}">{{selectedImage.website}}</a></h2>
+    </div>
+  </div>
+</div>
+----
+<1> El estilo `image-detail` lo definiremos en la hoja de estilos del componente de detalle.
+<2> Mostrar la imagen seleccionada
+<3> Mostrar otras propiedades de la imagen seleccionada
+
+.`image-detail.css`
+====
+[source]
+----
+.image-detail {
+    margin: 20px auto;
+}
+----
+====
+
+=== Routing
+
+Con routing podemos dividir una aplicación en áreas que podemos llamar páginas, e indicar a Angular qué paginas mostrar en función de la ruta especificada.
+
+Las aplicaciones Angular son SPA (Single Page Applications). En realidad sólo existe una página aunque tengamos la sensación de estar navegando por páginas diferentes. Routing es la técnica que lo permite.
+
+Como ejemplo, generemos dos componentes para asociarlos a los elementos de menú `Sobre` y `Contactar`. Estos serán los componentes `about` y `contact` que generaremos con Angular CLI tal y como se muestra a continuación. A cada uno le asignaremos una ruta.
+
+[source]
+----
+ng generate component about
+ng generate component contact
+----
+
+Las rutas se definen en `app.module.ts`. 
+
+.`app.module.ts`
+====
+[source]
+----
+...
+
+import { Routes, RouterModule } from '@angular/router'; <1>
+import { ModuleWithProviders } from '@angular/core';
+...
+const appRoutes: Routes = [
+  {path: '', redirectTo: '/gallery', pathMatch: 'full'}, <2>
+  {path: 'gallery', component: GalleryComponent}, <3>
+  {path: 'about', component: AboutComponent},
+  {path: 'contact', component: ContactComponent}
+];
+
+@NgModule({
+  ...
+  imports: [
+    RouterModule.forRoot(appRoutes), <4>
+    BrowserModule
+  ],
+  ...
+})
+...
+----
+<1> Importación de módulos necesarios para el routing
+<2> Redirigir el path vacío a la galería
+<3> Establecer los componentes a cargar en cada ruta
+<4> Modificación de los imports del módulo
+====
+
+A continuación, debemos indicar dónde colocar el contenido de cada ruta. Para ello, Angular cuenta con el tag `<router-outlet>`. En nuestro caso, cambiaremos el tag en `app.component.html` para que muestre en la página principal el contenido de la ruta seleccionada.
+
+.`app.component.html`
+====
+[source]
+----
+<app-navbar></app-navbar>
+<router-outlet></router-outlet>
+----
+====
+
+En el componente de la barra de navegación `navbar.component.html` debemos hacer varios cambios.
+
+* Los atributos `href` serán sustituidos por `[routerLink]` para convertirlos en links Angular y que usen las rutas definidas.
+* Aplicar el estilo de elemento activo del menú a la opción seleccionada:
+
+[source]
+----
+      <li routerLinkActive="active"> <1>
+        <a class="nav-link" [routerLink]="['/']">Inicio <span class="sr-only">(current)</span></a> <2>
+      </li>
+      <li routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/about']">Sobre</a> <3>
+      </li>
+      <li routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['/contact']">Contactar</a> <4>
+      </li>
+----
+<1> Utilizaremos `routerLinkActive` en cada link para aplicarle un estilo diferente al link activo
+<2> Uso de `[routerLink]` para establecer la ruta de inicio
+<3> Uso de `[routerLink]` para establecer la ruta de `/about`
+<4> Uso de `[routerLink]` para establecer la ruta de `/contact`
+
+Por último, debemos hacer un último cambio en el componente `image.component.html`, ya que si hacemos clic sobre una imagen veremos que se recarga su página de detalle, pero desaparece al instante. Para ello, haremos dos cambios:
+
+* Eliminar el atributo `href` en el link de la imagen en `image.component.html`.
+
++
+[source]
+----
+<a> <1>
+    <div class = "col-md-3 col-sm-4 col-xs-6"><img class="img-responsive" src="{{image.imageURL}}" /></div>
+</a>
+----
+<1> Quitar el atributo `href` para que no se produzca una regarga de página al mostrar detalles
+
+* Añadir a los estilos de `image.component.css` este estilo
+
++
+[source]
+----
+a:hover {
+    cursor: pointer;
+}
+----
+
+
+
+
