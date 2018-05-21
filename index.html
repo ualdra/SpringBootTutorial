@@ -702,7 +702,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_introducción">1. Introducción</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Spring es un framework de Java que permite el desarrollo de aplicaciones web eficientes manteniendo un modelo MVC, hoy en día es el framework mas utilizado en JAVA según el Developer Survey de StackOverflow 2017. A su vez, se ofrecen innumerables ofertas de trabajo a la gente que domina este framework, dado que en el mundo empresarial también es uno de los mas utilizados dentro de tecnologías de desarrollo basadas en JAVA, y nos guste mas o menos JAVA sigue siendo el lenguaje orientado a objetos mas utilizado.</p>
+<p>Spring es un framework de Java que permite el desarrollo de aplicaciones web eficientes manteniendo un patrón MVC, hoy en día es el framework mas utilizado en JAVA según el Developer Survey de StackOverflow 2017. A su vez, se ofrecen innumerables ofertas de trabajo a la gente que domina este framework, dado que en el mundo empresarial también es uno de los mas utilizados dentro de tecnologías de desarrollo basadas en JAVA, y nos guste mas o menos JAVA sigue siendo el lenguaje orientado a objetos mas utilizado.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -713,7 +713,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Uno de los mayores problemas que tiene un proyecto Spring es la cantidad de configuraciones que tenemos que realizar para adecuar nuestro proyecto a este framework, lo cual muchas veces es un lio. Spring Boot nace con el objetivo de realizar de manera rápida un proyecto de tipo Spring, sin tenernos que preocupar de dependencias, beans u otros archivos de configuración de nuestro proyecto. Gracias a ello podemos generar un proyecto de manera rápida y sencilla.</p>
 </div>
 <div class="paragraph">
-<p>A lo largo del desarrollo de la practica vamos a ver como realizar una pequeña API Rest con Spring Boot de manera muy sencilla. Si queréis mas información tenéis una serie de tutoriales muy interesantes en a página del framework. <a href="http://www.spring.io" class="bare">http://www.spring.io</a></p>
+<p>A lo largo del desarrollo de la práctica vamos a ver como realizar una pequeña API Rest con Spring Boot de manera muy sencilla. Si queréis mas información tenéis una serie de tutoriales muy interesantes en a página del framework. <a href="http://www.spring.io" class="bare">http://www.spring.io</a></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -737,10 +737,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="ulist">
 <ul>
 <li>
-<p>JAVA 1.8</p>
+<p>JAVA 1.8.</p>
 </li>
 <li>
-<p>Eclipse EE</p>
+<p>Eclipse EE.</p>
 </li>
 <li>
 <p>PostgreSQL (o cualquier otra base de datos SQL).</p>
@@ -776,13 +776,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>En esta sección os vamos a enseñar de manera muy rápida como aprovisionar una base de datos mediante Docker, lo cual servirá para que aprendáis como utilizar sistemas basados en contenedores.</p>
 </div>
 <div class="paragraph">
-<p>Docker es un proyecto de código abierto que automatiza el despliegue de aplicaciones dentro de contenedores de software, proporcionando una capa adicional de abstracción y automatización de Virtualización a nivel de sistema operativo en Linux. Podemos llegar a pensar que es un concepto parecido a una maquina virtual, pero nada mas lejos de la realidad, al contrario que una máquina virtual la cual requiere mantener todos los recursos necesarios para su mantenimiento reservados por el sistema, Docker nos permite compartir un kernel entre todos los contenedores que levantemos lo cual conlleva un mejor aprovechamiento de recursos, así como un uso mas comedido de los mismos. Para realizar la práctica nos vamos a descargar la community edition de Docker la cual podréis instalar en el siguiente enlace.</p>
+<p>Docker es un proyecto de código abierto que automatiza el despliegue de aplicaciones dentro de contenedores de software, proporcionando una capa adicional de abstracción y automatización de virtualización a nivel de sistema operativo en Linux. Podemos llegar a pensar que es un concepto parecido a una máquina virtual, pero nada mas lejos de la realidad, al contrario que una máquina virtual la cual requiere mantener todos los recursos necesarios para su mantenimiento reservados por el sistema, Docker nos permite compartir un kernel entre todos los contenedores que levantemos lo cual conlleva un mejor aprovechamiento de recursos, así como un uso mas comedido de los mismos. Para realizar la práctica nos vamos a descargar la community edition de Docker la cual podréis instalar en el siguiente enlace.</p>
 </div>
 <div class="paragraph">
 <p><a href="https://www.docker.com/community-edition">Pagina de descarga de Docker</a></p>
 </div>
 <div class="paragraph">
-<p>Una vez la tengáis instalado Docker en vuestro sistema reiniciaremos el equipo, acto seguido comprobaremos que esta todo bien instalado, para ello lanzaremos en consola la orden <code>docker --version</code> y comprobaremos que sale algo parecido a la imagen que tenemos a continuación.</p>
+<p>Una vez tengáis instalado Docker en vuestro sistema reiniciaremos el equipo, acto seguido comprobaremos que esta todo bien instalado, para ello lanzaremos en consola la orden <code>docker --version</code> y comprobaremos que sale algo parecido a la imagen que tenemos a continuación.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -793,7 +793,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Una vez tenemos instalado Docker en nuestro sistema vamos a realizar un uso básico de la plataforma para levantar un contenedor con PostgreSQL. Para ello muchas empresa ofrecen imágenes de Docker para utilizar su software las cuales podremos encontrar en <a href="https://hub.docker.com">Docker Hub</a>. Una vez estamos en Docker hub buscamos la imagen que nos interese, en nuestro caso vamos a utilizar la que aparece en el siguiente <a href="https://hub.docker.com/r/centos/postgresql-96-centos7/">enlace</a>.</p>
 </div>
 <div class="paragraph">
-<p>En el enlace podemos ver una serie de instrucciones de como personalizar parámetros de la base de datos, pero vamos a centrarnos en un uso básico. Lo primero que vamos a hacer es bajar la imagen del contenedor para ello utilizaremos la orden</p>
+<p>En el enlace podemos ver una serie de instrucciones de como personalizar parámetros de la base de datos, en nuestro caso vamos a centrarnos en un uso básico. Lo primero que vamos a hacer es bajar la imagen del contenedor para ello utilizaremos la orden</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -861,7 +861,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Una vez seleccionemos las dependencias pulsaremos “Generate Project” esto hará que se descargue un .zip con nuestro proyecto, el cual descomprimiremos donde nos venga en gana.</p>
 </div>
 <div class="paragraph">
-<p>El siguiente paso será abrir nuestro eclipseEE e importar el proyecto descargado, para ello seleccionamo la opción de importar proyecto maven ya existente.</p>
+<p>El siguiente paso será abrir nuestro eclipseEE e importar el proyecto descargado, para ello seleccionamos la opción de importar proyecto maven ya existente.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -979,7 +979,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="paragraph">
-<p>Como veis hemos creado una clase user con los campos nombre, apellido, email y password. Y la hemos anotado con ciertas ordenes, sería interesante que investigaseis mas acerca de los decoradores de JPA y Spring en general.</p>
+<p>Como veis hemos creado una clase user con los campos nombre, apellido, email y password. Y la hemos anotado con ciertos decoradores, sería interesante que investigaseis mas acerca de los decoradores de JPA y Spring en general.</p>
 </div>
 <div class="paragraph">
 <p>Por último para la realización de este pequeño ejemplo vamos a crear un archivo que será la base de la creación de nuestra API Rest y donde se produce la magia de SpringBoot. Para ello crearemos el siguiente archivo.</p>
@@ -1156,7 +1156,7 @@ Buscar métodos personalizados de JPA Repositories.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-05-19 20:49:29 Hora de verano romance
+Last updated 2018-05-21 15:55:51 Hora de verano romance
 </div>
 </div>
 </body>
