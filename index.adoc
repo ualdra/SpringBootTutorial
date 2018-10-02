@@ -32,6 +32,7 @@ Resumen del tutorial de SpringBoot
 * Probar la API con PostMan.
 
 // Modo numerado
+
 :numbered:
 
 == Introducción 
