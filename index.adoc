@@ -84,7 +84,7 @@ En el enlace podemos ver una serie de instrucciones de como personalizar paráme
 
 [source]
 ----
-$ docker pull centos/postgresql-96-centos7
+$ docker pull postgres
 ----
 
 
@@ -103,7 +103,7 @@ Una vez tengamos las carpetas creadas nos situaremos dentro de la carpeta de dra
 
 [source]
 ----
-$ docker run -d --name postgresql_database -e POSTGRESQL_USER=user -e POSTGRESQL_PASSWORD=pass -e POSTGRESQL_DATABASE=db -p 5432:5432 -v data:/var/lib/pgsql/data centos/postgresql-96-centos7
+$ docker run -d --name postgresql_database -e POSTGRES_USER=user -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=db -p 5432:5432 -v ./data:/var/lib/pgsql/data postgres
 ----
 
 Una vez lancemos la orden ya tendremos levantada nuestra base de datos PostgreSQL en el puerto 5432 con usuario//contraseña user//pass y base de datos db. Para comprobar que se ha lanzado podéis utilizar la orden `docker ps` y os saldrá algo parecido a esto.
