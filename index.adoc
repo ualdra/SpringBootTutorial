@@ -132,7 +132,23 @@ Luego tan solo le damos a finalizar y esperamos a que el proyecto termine el bui
 
 El siguiente paso es configurar la base de datos dentro de el archivo de propiedades del proyecto de SpringBoot mas concretamente en resources, en nuestro caso y dado que contamos con una base de datos PostgreSQL será lo siguiente.
 
+.Modificamos el archivo `application.properties`.
+====
 image::Eclipse3.png[]
+[source]
+----
+server.servlet.context-path=/api
+spring.datasource.url=jdbc:postgresql://localhost:5432/db
+spring.datasource.username=user
+spring.datasource.password=pass
+spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults = false
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQL9Dialect
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+----
+====
+
+
 
 El siguiente paso que vamos a hacer es crear una clase de tipo POJO (Plain Old Java Object) la cual representará una tabla de la base de datos en la cual podremos ciertas anotaciones que permitan definir las propiedades para Spring Data JPA.
 
@@ -237,7 +253,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource()
-public interface UserRepository extends CrudRepository<User, Long> { 
+public interface UserRepository extends CrudRepository<User, Long> {
 
 
 }
@@ -301,18 +317,12 @@ image::Postman3.png[]
 
 == Actividades
 
-A elegir una de las siguientes opciones para realizar la práctica.
-
 *	Implementar un método que permita buscar un usuario mediante su apellido. 
 [TIP]
 Buscar métodos personalizados de JPA Repositories.
 *	Implementar un controlador para generar rutas personalizadas en nuestra API. 
 [TIP]
 @RestController.
-*	Dotar de seguridad nuestra API Rest.
-*	Crear otra entidad (tabla) de nuestra base de datos y relacionarlas con una realacion 1 a muchos.
-*	Documentar de manera automática nuestra API mediante Swagger o Spring Rest Docs.
-*	Implementar otro tutorial de los encontrados en el siguiente enlace. https://spring.io/guides 
 
 
 
