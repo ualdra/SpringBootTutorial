@@ -90,21 +90,17 @@ $ docker pull postgres
 
 image::DockerPull.png[]
 
-Una vez descargada la imagen crearemos una carpeta donde lanzaremos la orden para levantar el contenedor, por el terminal nos crearemos una carpeta y dentro de ella crearemos otra llamada `data/`.
-
-image::mkDirData.png[]
-
-[NOTE]
-====
-Creamos una carpeta `data/` para que los datos persistan en nuestra máquina local, y así poder llevarnos esos datos a cualquier otra máquina o hacerle copias de seguridad.
-====
-
-Una vez tengamos las carpetas creadas nos situaremos dentro de la carpeta de dra y ejecutaremos la siguiente orden.
+A posteriori no situaremos dentro de la carpeta de dra y ejecutaremos la siguiente orden.
 
 [source]
 ----
-$ docker run -d --name postgresql_database -e POSTGRES_USER=user -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=db -p 5432:5432 -v ./data:/var/lib/pgsql/data postgres
+$ docker run -d --name postgresql_database -e POSTGRES_USER=user -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=db -p 5432:5432 -v data:/var/lib/pgsql/data postgres
 ----
+
+[NOTE]
+====
+Generamos una carpeta de volumen `data/` para que los datos persistan en nuestra máquina local, y así poder llevarnos esos datos a cualquier otra máquina o hacerle copias de seguridad.
+====
 
 Una vez lancemos la orden ya tendremos levantada nuestra base de datos PostgreSQL en el puerto 5432 con usuario//contraseña user//pass y base de datos db. Para comprobar que se ha lanzado podéis utilizar la orden `docker ps` y os saldrá algo parecido a esto.
 
