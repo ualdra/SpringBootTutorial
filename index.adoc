@@ -124,6 +124,19 @@ A continuación, seleccionamos la carpeta donde tengamos el proyecto, acto segui
 
 image::Eclipse2.png[]
 
+Dado que el proyecto utiliza validadores para tipos de datos de JAVAX tenemos que incluir esa dependencia en el `pom.xml`.
+
+.Dependencia javax.validation.
+====
+[source]
+----
+<dependency>
+    <groupId>javax.validation</groupId>
+    <artifactId>validation-api</artifactId>
+    <version>2.0.1.Final</version>
+</dependency>
+----
+====
 Luego tan solo le damos a finalizar y esperamos a que el proyecto termine el build.
 
 El siguiente paso es configurar la base de datos dentro de el archivo de propiedades del proyecto de SpringBoot mas concretamente en resources, en nuestro caso y dado que contamos con una base de datos PostgreSQL será lo siguiente.

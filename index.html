@@ -437,7 +437,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 </head>
-<body class="book toc2 toc-right">
+<body class="article toc2 toc-right data-line-1">
 <div id="header">
 <h1>SpringBoot</h1>
 <div class="details">
@@ -465,94 +465,94 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div id="content">
-<div class="sect1">
+<div class="sect1 data-line-22">
 <h2 id="_resumen">Resumen</h2>
 <div class="sectionbody">
-<div class="paragraph">
+<div class="paragraph data-line-24">
 <p>Resumen del tutorial de SpringBoot</p>
 </div>
-<div class="ulist">
+<div class="ulist data-line-28">
 <div class="title">Objetivos</div>
 <ul>
-<li>
+<li class="data-line-28">
 <p>Conocer la arquitectura de las aplicaciones de SpringBoot.</p>
 </li>
-<li>
+<li class="data-line-29">
 <p>Realizar una pequeña introducción a Docker.</p>
 </li>
-<li>
+<li class="data-line-30">
 <p>Aprender a usar SpringInitializer.</p>
 </li>
-<li>
+<li class="data-line-31">
 <p>Realizar una API Rest de manera rápida y sencilla con SpringBoot.</p>
 </li>
-<li>
+<li class="data-line-32">
 <p>Probar la API con PostMan.</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
-<div class="sect1">
+<div class="sect1 data-line-38">
 <h2 id="_introducción">1. Introducción</h2>
 <div class="sectionbody">
-<div class="paragraph">
+<div class="paragraph data-line-40">
 <p>Spring es un framework de Java que permite el desarrollo de aplicaciones web eficientes manteniendo un patrón MVC, hoy en día es el framework mas utilizado en JAVA según el Developer Survey de StackOverflow 2017. A su vez, se ofrecen innumerables ofertas de trabajo a la gente que domina este framework, dado que en el mundo empresarial también es uno de los mas utilizados dentro de tecnologías de desarrollo basadas en JAVA, y nos guste mas o menos JAVA sigue siendo el lenguaje orientado a objetos mas utilizado.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock data-line-42">
 <div class="content">
 <img src="./images/StackOverflowPL.png" alt="StackOverflowPL">
 </div>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-44">
 <p>Uno de los mayores problemas que tiene un proyecto Spring es la cantidad de configuraciones que tenemos que realizar para adecuar nuestro proyecto a este framework, lo cual muchas veces es un lio. Spring Boot nace con el objetivo de realizar de manera rápida un proyecto de tipo Spring, sin tenernos que preocupar de dependencias, beans u otros archivos de configuración de nuestro proyecto. Gracias a ello podemos generar un proyecto de manera rápida y sencilla.</p>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-46">
 <p>A lo largo del desarrollo de la práctica vamos a ver como realizar una pequeña API Rest con Spring Boot de manera muy sencilla. Si queréis mas información tenéis una serie de tutoriales muy interesantes en a página del framework. <a href="http://www.spring.io" class="bare">http://www.spring.io</a></p>
 </div>
-<div class="admonitionblock note">
+<div class="admonitionblock note data-line-49">
 <table>
 <tr>
 <td class="icon">
 <div class="title">Note</div>
 </td>
 <td class="content">
-<div class="paragraph">
+<div class="paragraph data-line-50">
 <p>En la <a href="https://www.springboot.io">web oficial de Spring</a> es un buen punto de referencia si quereis profundizar en el tema de Spring en general.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
-<div class="sect2">
+<div class="sect2 data-line-53">
 <h3 id="_preparando_la_máquina">1.1. Preparando la máquina</h3>
-<div class="paragraph">
+<div class="paragraph data-line-55">
 <p>Lo primero es comprobar que tenéis instalado y funcionando el siguiente Software.</p>
 </div>
-<div class="ulist">
+<div class="ulist data-line-57">
 <ul>
-<li>
+<li class="data-line-57">
 <p>JAVA 1.8.</p>
 </li>
-<li>
+<li class="data-line-58">
 <p>Eclipse EE.</p>
 </li>
-<li>
+<li class="data-line-59">
 <p>PostgreSQL (o cualquier otra base de datos SQL).</p>
 </li>
-<li>
+<li class="data-line-60">
 <p>Opcional: Docker.</p>
 </li>
 </ul>
 </div>
-<div class="admonitionblock note">
+<div class="admonitionblock note data-line-63">
 <table>
 <tr>
 <td class="icon">
 <div class="title">Note</div>
 </td>
 <td class="content">
-<div class="paragraph">
+<div class="paragraph data-line-64">
 <p>En nuestro caso la base de datos la vamos a levantar mediante Dockers, pero podéis utilizar una instalación local que tengáis en vuestro equipo, no obstante dedicaremos la sección uno a explicar de manera rápida como levantar un contenedor de Docker con PostgreSQL.</p>
 </div>
 </td>
@@ -562,124 +562,141 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 </div>
-<div class="sect1">
+<div class="sect1 data-line-67">
 <h2 id="_desarrollo">2. Desarrollo</h2>
 <div class="sectionbody">
-<div class="sect2">
+<div class="sect2 data-line-69">
 <h3 id="_aprovisionamiento_de_una_base_de_datos_mediante_docker">2.1. Aprovisionamiento de una base de datos mediante Docker.</h3>
-<div class="paragraph">
+<div class="paragraph data-line-71">
 <p>En esta sección os vamos a enseñar de manera muy rápida como aprovisionar una base de datos mediante Docker, lo cual servirá para que aprendáis como utilizar sistemas basados en contenedores.</p>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-73">
 <p>Docker es un proyecto de código abierto que automatiza el despliegue de aplicaciones dentro de contenedores de software, proporcionando una capa adicional de abstracción y automatización de virtualización a nivel de sistema operativo en Linux. Podemos llegar a pensar que es un concepto parecido a una máquina virtual, pero nada más lejos de la realidad, al contrario que una máquina virtual la cual requiere mantener todos los recursos necesarios para su mantenimiento reservados por el sistema, Docker nos permite compartir un kernel entre todos los contenedores que levantemos lo cual conlleva un mejor aprovechamiento de recursos, así como un uso mas comedido de los mismos. Para realizar la práctica nos vamos a descargar la community edition de Docker la cual podréis instalar en el siguiente enlace.</p>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-75">
 <p><a href="https://www.docker.com/community-edition">Pagina de descarga de Docker</a></p>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-77">
 <p>Una vez tengáis instalado Docker en vuestro sistema reiniciaremos el equipo, acto seguido comprobaremos que esta todo bien instalado, para ello lanzaremos en consola la orden <code>docker --version</code> y comprobaremos que sale algo parecido a la imagen que tenemos a continuación.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock data-line-79">
 <div class="content">
 <img src="./images/DockerVersion.png" alt="DockerVersion">
 </div>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-81">
 <p>Una vez tenemos instalado Docker en nuestro sistema vamos a realizar un uso básico de la plataforma para levantar un contenedor con PostgreSQL. Para ello muchas empresas ofrecen imágenes de Docker para utilizar su software las cuales podremos encontrar en <a href="https://hub.docker.com">Docker Hub</a>. Una vez estamos en Docker hub buscamos la imagen que nos interese, en nuestro caso vamos a utilizar la que aparece en el siguiente <a href="https://hub.docker.com/r/centos/postgresql-96-centos7/">enlace</a>.</p>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-83">
 <p>En el enlace podemos ver una serie de instrucciones de como personalizar parámetros de la base de datos, en nuestro caso vamos a centrarnos en un uso básico. Lo primero que vamos a hacer es bajar la imagen del contenedor para ello utilizaremos la orden</p>
 </div>
-<div class="listingblock">
+<div class="listingblock data-line-86">
 <div class="content">
-<pre class="rouge highlight"><code>$ docker pull postgres</code></pre>
+<pre class="highlight"><code>$ docker pull postgres</code></pre>
 </div>
 </div>
-<div class="imageblock">
+<div class="imageblock data-line-91">
 <div class="content">
 <img src="./images/DockerPull.png" alt="DockerPull">
 </div>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-93">
 <p>A posteriori no situaremos dentro de la carpeta de dra y ejecutaremos la siguiente orden.</p>
 </div>
-<div class="listingblock">
+<div class="listingblock data-line-96">
 <div class="content">
-<pre class="rouge highlight"><code>$ docker run -d --name postgresql_database -e POSTGRES_USER=user -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=db -p 5432:5432 -v data:/var/lib/pgsql/data postgres</code></pre>
+<pre class="highlight"><code>$ docker run -d --name postgresql_database -e POSTGRES_USER=user -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=db -p 5432:5432 -v data:/var/lib/pgsql/data postgres</code></pre>
 </div>
 </div>
-<div class="admonitionblock note">
+<div class="admonitionblock note data-line-101">
 <table>
 <tr>
 <td class="icon">
 <div class="title">Note</div>
 </td>
 <td class="content">
-<div class="paragraph">
+<div class="paragraph data-line-102">
 <p>Generamos una carpeta de volumen <code>data/</code> para que los datos persistan en nuestra máquina local, y así poder llevarnos esos datos a cualquier otra máquina o hacerle copias de seguridad.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-105">
 <p>Una vez lancemos la orden ya tendremos levantada nuestra base de datos PostgreSQL en el puerto 5432 con usuario//contraseña user//pass y base de datos db. Para comprobar que se ha lanzado podéis utilizar la orden <code>docker ps</code> y os saldrá algo parecido a esto.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock data-line-107">
 <div class="content">
 <img src="./images/DockerPs.png" alt="DockerPs">
 </div>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-109">
 <p>Con esto ya estamos listos para comenzar nuestra aplicación Spring Boot.</p>
 </div>
 </div>
-<div class="sect2">
+<div class="sect2 data-line-111">
 <h3 id="_creación_de_un_proyecto_de_springboot">2.2. Creación de un proyecto de SpringBoot</h3>
-<div class="paragraph">
+<div class="paragraph data-line-113">
 <p>Para crear un proyecto con todas las configuraciones predefinidas vamos a entrar en la página <a href="https://start.spring.io">start.spring.io</a> y poned las configuraciones que salen a continuación para añadir los paquetes solo tendréis que poner sus nombres en el campo de “Search for dependencies”.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock data-line-115">
 <div class="content">
 <img src="./images/SpringInit.png" alt="SpringInit">
 </div>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-117">
 <p>Una vez seleccionemos las dependencias pulsaremos “Generate Project” esto hará que se descargue un .zip con nuestro proyecto, el cual descomprimiremos donde nos venga en gana.</p>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-119">
 <p>El siguiente paso será abrir nuestro eclipseEE e importar el proyecto descargado, para ello seleccionamos la opción de importar proyecto maven ya existente.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock data-line-121">
 <div class="content">
 <img src="./images/Eclipse1.png" alt="Eclipse1">
 </div>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-123">
 <p>A continuación, seleccionamos la carpeta donde tengamos el proyecto, acto seguido nos aparecerá el pom del proyecto que creamos en la página de Spring.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock data-line-125">
 <div class="content">
 <img src="./images/Eclipse2.png" alt="Eclipse2">
 </div>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-127">
+<p>Dado que el proyecto utiliza validadores para tipos de datos de JAVAX tenemos que incluir esa dependencia en el <code>pom.xml</code>.</p>
+</div>
+<div class="exampleblock data-line-130">
+<div class="title">Example 1. Dependencia javax.validation.</div>
+<div class="content">
+<div class="listingblock data-line-132">
+<div class="content">
+<pre class="highlight"><code>&lt;dependency&gt;
+    &lt;groupId&gt;javax.validation&lt;/groupId&gt;
+    &lt;artifactId&gt;validation-api&lt;/artifactId&gt;
+    &lt;version&gt;2.0.1.Final&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph data-line-140">
 <p>Luego tan solo le damos a finalizar y esperamos a que el proyecto termine el build.</p>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-142">
 <p>El siguiente paso es configurar la base de datos dentro de el archivo de propiedades del proyecto de SpringBoot mas concretamente en resources, en nuestro caso y dado que contamos con una base de datos PostgreSQL será lo siguiente.</p>
 </div>
-<div class="exampleblock">
-<div class="title">Example 1. Modificamos el archivo <code>application.properties</code>.</div>
+<div class="exampleblock data-line-145">
+<div class="title">Example 2. Modificamos el archivo <code>application.properties</code>.</div>
 <div class="content">
-<div class="imageblock">
+<div class="imageblock data-line-146">
 <div class="content">
 <img src="./images/Eclipse3.png" alt="Eclipse3">
 </div>
 </div>
-<div class="listingblock">
+<div class="listingblock data-line-148">
 <div class="content">
-<pre class="rouge highlight"><code>server.servlet.context-path=/api
+<pre class="highlight"><code>server.servlet.context-path=/api
 spring.datasource.url=jdbc:postgresql://localhost:5432/db
 spring.datasource.username=user
 spring.datasource.password=pass
@@ -691,15 +708,15 @@ spring.jpa.show-sql=true</code></pre>
 </div>
 </div>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-162">
 <p>El siguiente paso que vamos a hacer es crear una clase de tipo POJO (Plain Old Java Object) la cual representará una tabla de la base de datos en la cual podremos ciertas anotaciones que permitan definir las propiedades para Spring Data JPA.</p>
 </div>
-<div class="exampleblock">
-<div class="title">Example 2. Creacion del archivo POJO <code>User.java</code>.</div>
+<div class="exampleblock data-line-165">
+<div class="title">Example 3. Creacion del archivo POJO <code>User.java</code>.</div>
 <div class="content">
-<div class="listingblock">
+<div class="listingblock data-line-167">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">package ual.dra.rest;
+<pre class="highlight"><code class="language-java" data-lang="java">package ual.dra.rest;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -782,23 +799,23 @@ public void setEmail(String email) {
 </div>
 </div>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-250">
 <p>Como veis hemos creado una clase user con los campos nombre, apellido, email y password. Y la hemos anotado con ciertos decoradores, sería interesante que investigaseis mas acerca de los decoradores de JPA y Spring en general.</p>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-252">
 <p>Por último para la realización de este pequeño ejemplo vamos a crear un archivo que será la base de la creación de nuestra API Rest y donde se produce la magia de SpringBoot. Para ello crearemos el siguiente archivo.</p>
 </div>
-<div class="exampleblock">
-<div class="title">Example 3. Creamos archivo de Interface <code>UserRepository.java</code>.</div>
+<div class="exampleblock data-line-255">
+<div class="title">Example 4. Creamos archivo de Interface <code>UserRepository.java</code>.</div>
 <div class="content">
-<div class="imageblock">
+<div class="imageblock data-line-256">
 <div class="content">
 <img src="./images/Eclipse4.png" alt="Eclipse4">
 </div>
 </div>
-<div class="listingblock">
+<div class="listingblock data-line-258">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">package ual.dra.rest;
+<pre class="highlight"><code class="language-java" data-lang="java">package ual.dra.rest;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
@@ -812,15 +829,15 @@ public interface UserRepository extends CrudRepository&lt;User, Long&gt; {
 </div>
 </div>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-272">
 <p>Por último iremos a RestApplication.java y anotaremos la clase de la siguiente manera.</p>
 </div>
-<div class="exampleblock">
-<div class="title">Example 4. Modificamos archivo principal de la aplicacion <code>RestApplication.java</code>.</div>
+<div class="exampleblock data-line-275">
+<div class="title">Example 5. Modificamos archivo principal de la aplicacion <code>RestApplication.java</code>.</div>
 <div class="content">
-<div class="listingblock">
+<div class="listingblock data-line-277">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">package ual.dra.rest;
+<pre class="highlight"><code class="language-java" data-lang="java">package ual.dra.rest;
 
 
 import org.springframework.boot.SpringApplication;
@@ -840,62 +857,62 @@ public class RestApplication {
 </div>
 </div>
 </div>
-<div class="admonitionblock note">
+<div class="admonitionblock note data-line-299">
 <table>
 <tr>
 <td class="icon">
 <div class="title">Note</div>
 </td>
 <td class="content">
-<div class="paragraph">
+<div class="paragraph data-line-300">
 <p>Cada vez que modifiquéis algo es interesante que hagáis un RunAs “Maven Clean” y un RunAs “Maven Install” para que recompileis el proyecto.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-303">
 <p>Para lanzar la API nos basta con lanzar la aplicación como si fuese una app de consola, lo único que cuando nos de a elegir la clase con la que debemos lanzar la aplicación, la lancemos con RestApplication.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock data-line-305">
 <div class="content">
 <img src="./images/Eclipse5.png" alt="Eclipse5">
 </div>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-307">
 <p>Como vemos a continuación cuando ejecutamos la aplicación se nos levantan una serie de rutas de manera automática.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock data-line-309">
 <div class="content">
 <img src="./images/EclipseConsola.png" alt="EclipseConsola">
 </div>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-311">
 <p>Con algo tan sencillo como lo que estáis viendo hemos conseguido levantar una API Rest completamente funcional con todas las funciones CRUD.</p>
 </div>
 </div>
-<div class="sect2">
+<div class="sect2 data-line-313">
 <h3 id="_probando_nuestra_api_rest">2.3. Probando nuestra API Rest</h3>
-<div class="paragraph">
+<div class="paragraph data-line-315">
 <p>El ultimo paso va a ser probarlo, para ello vamos a utilizar POSTMAN pero podéis usar cualquier programa que sirva para testear APIs Rest. Por defecto Spring Boot te va a generar una serie de métodos y rutas que cubren la funcionalidad CRUD de la entidad que hayamos creado, esas Rutas se pueden personalizar con el uso de controladores dentro de nuestra aplicación de Spring. No obstante nosotros para ver si funciona o no vamos a usar los métodos de la API tal y como están definidos por defecto. Al entrar en <a href="http://localhost:8080/api" class="bare">http://localhost:8080/api</a> vemos las rutas definidas en nuestra API.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock data-line-317">
 <div class="content">
 <img src="./images/Postman1.png" alt="Postman1">
 </div>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-319">
 <p>Lo siguiente vamos a introducir un par de usuario.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock data-line-321">
 <div class="content">
 <img src="./images/Postman2.png" alt="Postman2">
 </div>
 </div>
-<div class="paragraph">
+<div class="paragraph data-line-323">
 <p>Es interesante ver que lo estamos introduciendo como RAW data en el body de la Request de un método POST para introducir el usuario, el listado es simplemente tirar de la ruta mediante un GET, si quisiésemos ver solo un usuario nos basta con solo tirar del la id del mismo.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock data-line-325">
 <div class="content">
 <img src="./images/Postman3.png" alt="Postman3">
 </div>
@@ -903,14 +920,14 @@ public class RestApplication {
 </div>
 </div>
 </div>
-<div class="sect1">
+<div class="sect1 data-line-327">
 <h2 id="_actividades">3. Actividades</h2>
 <div class="sectionbody">
-<div class="ulist">
+<div class="ulist data-line-329">
 <ul>
-<li>
+<li class="data-line-329">
 <p>Implementar un método que permita buscar un usuario mediante su apellido.</p>
-<div class="admonitionblock tip">
+<div class="admonitionblock tip data-line-331">
 <table>
 <tr>
 <td class="icon">
@@ -923,9 +940,9 @@ Buscar métodos personalizados de JPA Repositories.
 </table>
 </div>
 </li>
-<li>
+<li class="data-line-332">
 <p>Implementar un controlador para generar rutas personalizadas en nuestra API.</p>
-<div class="admonitionblock tip">
+<div class="admonitionblock tip data-line-334">
 <table>
 <tr>
 <td class="icon">
@@ -945,7 +962,7 @@ Buscar métodos personalizados de JPA Repositories.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-03-11 11:58:48 +0100
+Last updated 2021-03-10 16:47:17 +0100
 </div>
 </div>
 </body>
