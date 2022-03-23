@@ -1,0 +1,338 @@
+:encoding: utf-8
+:lang: es
+:toc: right
+:toc-title: Tabla de contenidos
+:doctype: book
+:imagesdir: ./images
+:source-highlighter: rouge
+
+////
+Nombre - Titulo
+////
+# SpringBoot
+Tutorial básico de SpringBoot
+Manel Mena <manel.mena@ual.es>
+
+
+// Modo no numerado de apartados
+:numbered!: 
+
+
+[abstract]
+== Resumen
+
+Resumen del tutorial de SpringBoot
+
+.Objetivos
+
+* Conocer la arquitectura de las aplicaciones de SpringBoot.
+* Realizar una pequeña introducción a Docker.
+* Aprender a usar SpringInitializer.
+* Realizar una API Rest de manera rápida y sencilla con SpringBoot.
+* Probar la API con PostMan.
+
+// Modo numerado
+
+:numbered:
+
+== Introducción 
+
+Spring es un framework de Java que permite el desarrollo de aplicaciones web eficientes manteniendo un patrón MVC, hoy en día es el framework mas utilizado en JAVA según el Developer Survey de StackOverflow 2017. A su vez, se ofrecen innumerables ofertas de trabajo a la gente que domina este framework, dado que en el mundo empresarial también es uno de los mas utilizados dentro de tecnologías de desarrollo basadas en JAVA, y nos guste mas o menos JAVA sigue siendo el lenguaje orientado a objetos mas utilizado.
+
+image::StackOverflowPL.png[]
+
+Uno de los mayores problemas que tiene un proyecto Spring es la cantidad de configuraciones que tenemos que realizar para adecuar nuestro proyecto a este framework, lo cual muchas veces es un lio. Spring Boot nace con el objetivo de realizar de manera rápida un proyecto de tipo Spring, sin tenernos que preocupar de dependencias, beans u otros archivos de configuración de nuestro proyecto. Gracias a ello podemos generar un proyecto de manera rápida y sencilla.
+
+A lo largo del desarrollo de la práctica vamos a ver como realizar una pequeña API Rest con Spring Boot de manera muy sencilla. Si queréis mas información tenéis una serie de tutoriales muy interesantes en a página del framework. http://www.spring.io
+
+[NOTE]
+====
+En la https://www.springboot.io[web oficial de Spring] es un buen punto de referencia si quereis profundizar en el tema de Spring en general.
+====
+
+=== Preparando la máquina
+
+Lo primero es comprobar que tenéis instalado y funcionando el siguiente Software.
+
+*	JAVA 1.8.
+*	Eclipse EE.
+*	PostgreSQL (o cualquier otra base de datos SQL).
+*	Opcional: Docker.
+
+[NOTE]
+====
+En nuestro caso la base de datos la vamos a levantar mediante Dockers, pero podéis utilizar una instalación local que tengáis en vuestro equipo, no obstante dedicaremos la sección uno a explicar de manera rápida como levantar un contenedor de Docker con PostgreSQL.
+====
+
+== Desarrollo
+
+=== Aprovisionamiento de una base de datos mediante Docker.
+
+En esta sección os vamos a enseñar de manera muy rápida como aprovisionar una base de datos mediante Docker, lo cual servirá para que aprendáis como utilizar sistemas basados en contenedores.
+
+Docker es un proyecto de código abierto que automatiza el despliegue de aplicaciones dentro de contenedores de software, proporcionando una capa adicional de abstracción y automatización de virtualización a nivel de sistema operativo en Linux. Podemos llegar a pensar que es un concepto parecido a una máquina virtual, pero nada más lejos de la realidad, al contrario que una máquina virtual la cual requiere mantener todos los recursos necesarios para su mantenimiento reservados por el sistema, Docker nos permite compartir un kernel entre todos los contenedores que levantemos lo cual conlleva un mejor aprovechamiento de recursos, así como un uso mas comedido de los mismos. Para realizar la práctica nos vamos a descargar la community edition de Docker la cual podréis instalar en el siguiente enlace.
+
+https://www.docker.com/community-edition[Pagina de descarga de Docker]
+
+Una vez tengáis instalado Docker en vuestro sistema reiniciaremos el equipo, acto seguido comprobaremos que esta todo bien instalado, para ello lanzaremos en consola la orden `docker --version` y comprobaremos que sale algo parecido a la imagen que tenemos a continuación.
+
+image::DockerVersion.png[]
+
+Una vez tenemos instalado Docker en nuestro sistema vamos a realizar un uso básico de la plataforma para levantar un contenedor con PostgreSQL. Para ello muchas empresas ofrecen imágenes de Docker para utilizar su software las cuales podremos encontrar en https://hub.docker.com[Docker Hub]. Una vez estamos en Docker hub buscamos la imagen que nos interese, en nuestro caso vamos a utilizar la que aparece en el siguiente https://hub.docker.com/r/centos/postgresql-96-centos7/[enlace].
+
+En el enlace podemos ver una serie de instrucciones de como personalizar parámetros de la base de datos, en nuestro caso vamos a centrarnos en un uso básico. Lo primero que vamos a hacer es bajar la imagen del contenedor para ello utilizaremos la orden 
+
+[source]
+----
+$ docker pull postgres
+----
+
+
+image::DockerPull.png[]
+
+A posteriori no situaremos dentro de la carpeta de dra y ejecutaremos la siguiente orden.
+
+[source]
+----
+$ docker run -d --name postgresql_database -e POSTGRES_USER=user -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=db -p 5432:5432 -v data:/var/lib/pgsql/data postgres
+----
+
+[NOTE]
+====
+Generamos una carpeta de volumen `data/` para que los datos persistan en nuestra máquina local, y así poder llevarnos esos datos a cualquier otra máquina o hacerle copias de seguridad.
+====
+
+Una vez lancemos la orden ya tendremos levantada nuestra base de datos PostgreSQL en el puerto 5432 con usuario//contraseña user//pass y base de datos db. Para comprobar que se ha lanzado podéis utilizar la orden `docker ps` y os saldrá algo parecido a esto.
+
+image::DockerPs.png[]
+
+Con esto ya estamos listos para comenzar nuestra aplicación Spring Boot.
+
+=== Creación de un proyecto de SpringBoot
+
+Para crear un proyecto con todas las configuraciones predefinidas vamos a entrar en la página https://start.spring.io[start.spring.io] y poned las configuraciones que salen a continuación para añadir los paquetes solo tendréis que poner sus nombres en el campo de “Search for dependencies”.
+
+image::SpringInit.png[]
+
+Una vez seleccionemos las dependencias pulsaremos “Generate Project” esto hará que se descargue un .zip con nuestro proyecto, el cual descomprimiremos donde nos venga en gana.
+
+El siguiente paso será abrir nuestro eclipseEE e importar el proyecto descargado, para ello seleccionamos la opción de importar proyecto maven ya existente.
+
+image::Eclipse1.png[]
+
+A continuación, seleccionamos la carpeta donde tengamos el proyecto, acto seguido nos aparecerá el pom del proyecto que creamos en la página de Spring.
+
+image::Eclipse2.png[]
+
+Dado que el proyecto utiliza validadores para tipos de datos de JAVAX tenemos que incluir esa dependencia en el `pom.xml`.
+
+.Dependencia javax.validation.
+====
+[source]
+----
+<dependency>
+    <groupId>javax.validation</groupId>
+    <artifactId>validation-api</artifactId>
+    <version>2.0.1.Final</version>
+</dependency>
+----
+====
+Luego tan solo le damos a finalizar y esperamos a que el proyecto termine el build.
+
+El siguiente paso es configurar la base de datos dentro de el archivo de propiedades del proyecto de SpringBoot mas concretamente en resources, en nuestro caso y dado que contamos con una base de datos PostgreSQL será lo siguiente.
+
+.Modificamos el archivo `application.properties`.
+====
+image::Eclipse3.png[]
+[source]
+----
+server.servlet.context-path=/api
+spring.datasource.url=jdbc:postgresql://localhost:5432/db
+spring.datasource.username=user
+spring.datasource.password=pass
+spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults = false
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQL9Dialect
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+----
+====
+
+
+
+El siguiente paso que vamos a hacer es crear una clase de tipo POJO (Plain Old Java Object) la cual representará una tabla de la base de datos en la cual podremos ciertas anotaciones que permitan definir las propiedades para Spring Data JPA.
+
+.Creacion del archivo POJO `User.java`.
+====
+[source,java]
+----
+package ual.dra.rest;
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+@Entity
+@Table(name = "users")
+public class User implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull
+    @Size(max = 65)
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Size(max = 65)
+    @Column(name = "last_name")
+    private String lastName;
+
+    @NotNull
+    @Email
+    @Size(max = 100)
+    @Column(unique = true)
+    private String email;
+
+    @NotNull
+    @Size(max = 128)
+    private String password;
+
+    // Hibernate requires a no-arg constructor
+    public User() {
+
+    }
+    public User(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public String getEmail() {
+		return email;
+	}
+public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+}
+----
+====
+
+Como veis hemos creado una clase user con los campos nombre, apellido, email y password. Y la hemos anotado con ciertos decoradores, sería interesante que investigaseis mas acerca de los decoradores de JPA y Spring en general.
+
+Por último para la realización de este pequeño ejemplo vamos a crear un archivo que será la base de la creación de nuestra API Rest y donde se produce la magia de SpringBoot. Para ello crearemos el siguiente archivo.
+
+.Creamos archivo de Interface `UserRepository.java`.
+====
+image::Eclipse4.png[]
+[source,java]
+----
+package ual.dra.rest;
+
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
+@RepositoryRestResource()
+public interface UserRepository extends CrudRepository<User, Long> {
+
+
+}
+----
+====
+
+Por último iremos a RestApplication.java y anotaremos la clase de la siguiente manera.
+
+.Modificamos archivo principal de la aplicacion `RestApplication.java`.
+====
+[source,java]
+----
+package ual.dra.rest;
+
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+@SpringBootApplication
+public class RestApplication {
+
+	
+	public static void main(String[] args) {
+		SpringApplication.run(RestApplication.class, args);
+	}
+}
+----
+====
+
+
+[NOTE]
+====
+Cada vez que modifiquéis algo es interesante que hagáis un RunAs “Maven Clean” y un RunAs “Maven Install” para que recompileis el proyecto.
+====
+
+Para lanzar la API nos basta con lanzar la aplicación como si fuese una app de consola, lo único que cuando nos de a elegir la clase con la que debemos lanzar la aplicación, la lancemos con RestApplication.
+
+image::Eclipse5.png[]
+
+Como vemos a continuación cuando ejecutamos la aplicación se nos levantan una serie de rutas de manera automática.
+
+image::EclipseConsola.png[]
+
+Con algo tan sencillo como lo que estáis viendo hemos conseguido levantar una API Rest completamente funcional con todas las funciones CRUD.
+
+=== Probando nuestra API Rest
+
+El ultimo paso va a ser probarlo, para ello vamos a utilizar POSTMAN pero podéis usar cualquier programa que sirva para testear APIs Rest. Por defecto Spring Boot te va a generar una serie de métodos y rutas que cubren la funcionalidad CRUD de la entidad que hayamos creado, esas Rutas se pueden personalizar con el uso de controladores dentro de nuestra aplicación de Spring. No obstante nosotros para ver si funciona o no vamos a usar los métodos de la API tal y como están definidos por defecto. Al entrar en http://localhost:8080/api vemos las rutas definidas en nuestra API.
+
+image::Postman1.png[]
+
+Lo siguiente vamos a introducir un par de usuario.
+
+image::Postman2.png[]
+
+Es interesante ver que lo estamos introduciendo como RAW data en el body de la Request de un método POST para introducir el usuario, el listado es simplemente tirar de la ruta mediante un GET, si quisiésemos ver solo un usuario nos basta con solo tirar del la id del mismo. 
+
+image::Postman3.png[]
+
+== Actividades
+
+*	Implementar un método que permita buscar un usuario mediante su apellido. 
+[TIP]
+Buscar métodos personalizados de JPA Repositories.
+*	Implementar un controlador para generar rutas personalizadas en nuestra API. 
+[TIP]
+@RestController.
+
+
+
+
