@@ -37,7 +37,7 @@ Resumen del tutorial de SpringBoot
 
 == Introducción 
 
-Spring es un framework de Java que permite el desarrollo de aplicaciones web eficientes manteniendo un patrón MVC, hoy en día es el framework mas utilizado en JAVA según el Developer Survey de StackOverflow 2017. A su vez, se ofrecen innumerables ofertas de trabajo a la gente que domina este framework, dado que en el mundo empresarial también es uno de los mas utilizados dentro de tecnologías de desarrollo basadas en JAVA, y nos guste mas o menos JAVA sigue siendo el lenguaje orientado a objetos mas utilizado.
+Spring es un framework de Java que permite el desarrollo de aplicaciones web eficientes manteniendo un patrón MVC, hoy en día es el framework mas utilizado en JAVA según el Developer Survey de StackOverflow 2021. A su vez, se ofrecen innumerables ofertas de trabajo a la gente que domina este framework, dado que en el mundo empresarial también es uno de los mas utilizados dentro de tecnologías de desarrollo basadas en JAVA, y nos guste mas o menos JAVA sigue siendo el lenguaje orientado a objetos mas utilizado.
 
 image::StackOverflowPL.png[]
 
@@ -112,10 +112,23 @@ Con esto ya estamos listos para comenzar nuestra aplicación Spring Boot.
 
 Para crear un proyecto con todas las configuraciones predefinidas vamos a entrar en la página https://start.spring.io[start.spring.io] y poned las configuraciones que salen a continuación para añadir los paquetes solo tendréis que poner sus nombres en el campo de “Search for dependencies”.
 
+.Iniciando un proyecto Spring Boot
+====
 image::SpringInit.png[]
+====
+<1> Pulsamos en *ADD DEPENDENCIES* para buscar y añadir las siguientes dependencias:
++
+Spring Web:: Permite construir aplicaciones web utilizando un contenedor Apache Tomcat.
 
-Una vez seleccionemos las dependencias pulsaremos “Generate Project” esto hará que se descargue un .zip con nuestro proyecto, el cual descomprimiremos donde nos venga en gana.
+Spring Data JPA:: Soporte de persistencia de datos en SQL mediante Java Persistence API con Spring Data and Hibernate.
 
+Rest Repositories:: Exponer los repositorios de Spring Data mediante REST usando Spring Data REST.
+
+PostgreSQL Driver:: Driver JDBC y R2DBC driver para conectar a una base de datos PostgreSQL.
+
+<2> Una vez seleccionemos las dependencias pulsaremos en *GENERATE* para descargar un .zip con nuestro proyecto, el cual descomprimiremos donde nos venga en gana.
+
+=== Configuración de Visual Studio Code
 El siguiente paso será abrir nuestro eclipseEE e importar el proyecto descargado, para ello seleccionamos la opción de importar proyecto maven ya existente.
 
 image::Eclipse1.png[]
