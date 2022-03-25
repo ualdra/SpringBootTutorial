@@ -11,7 +11,7 @@ Nombre - Titulo
 ////
 # SpringBoot
 Tutorial básico de SpringBoot
-Manel Mena <manel.mena@ual.es>
+Manel Mena <manel.mena@ual.es>; Francisco García <paco.garcia@ual.es>
 
 
 // Modo no numerado de apartados
@@ -54,8 +54,8 @@ En la https://www.springboot.io[web oficial de Spring] es un buen punto de refer
 
 Lo primero es comprobar que tenéis instalado y funcionando el siguiente Software.
 
-*	JAVA 1.8.
-*	Eclipse EE.
+*	JAVA 11.
+*	Visual Studio Code.
 *	PostgreSQL (o cualquier otra base de datos SQL).
 *	Opcional: Docker.
 
@@ -126,161 +126,194 @@ Rest Repositories:: Exponer los repositorios de Spring Data mediante REST usando
 
 PostgreSQL Driver:: Driver JDBC y R2DBC driver para conectar a una base de datos PostgreSQL.
 
-<2> Una vez seleccionemos las dependencias pulsaremos en *GENERATE* para descargar un .zip con nuestro proyecto, el cual descomprimiremos donde nos venga en gana.
+<2> Una vez seleccionemos las dependencias pulsaremos en *GENERATE* para descargar un .zip con nuestro proyecto, el cual se puede extraer en el directorio que queramos.
 
 === Configuración de Visual Studio Code
-El siguiente paso será abrir nuestro eclipseEE e importar el proyecto descargado, para ello seleccionamos la opción de importar proyecto maven ya existente.
 
-image::Eclipse1.png[]
+Para trabajar con Spring Boot en https://code.visualstudio.com/download[Visual Studio Code] vamos a instalar un conjunto de extensiones que nos hagan más facil la vida.
 
-A continuación, seleccionamos la carpeta donde tengamos el proyecto, acto seguido nos aparecerá el pom del proyecto que creamos en la página de Spring.
+Para ello visitamos la página https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack para instalar el Extension Pack for Java.
 
-image::Eclipse2.png[]
+image::vscode-extension-java.png[]
 
-Dado que el proyecto utiliza validadores para tipos de datos de JAVAX tenemos que incluir esa dependencia en el `pom.xml`.
+Pulsaremos en `Install` para incorporar las siguientes extensiones:
 
-.Dependencia javax.validation.
+* Language Support for Java™ by Red Hat
+* Debugger for Java
+* Test Runner for Java
+* Maven for Java
+* Project Manager for Java
+* Visual Studio IntelliCode
+
+Una vez instalada nos aparece la ventana de _Get Started_ donde podemos instalar una versión de JDK si no tenemos ya una.
+
+NOTE: Se recomienda instalar una *versión igual o superior a JDK 11*
+
+image::vscode-install-jdk.png[]
+
+También necesitaremos instalar el soporte para Spring Boot mediante el siguiente https://marketplace.visualstudio.com/items?itemName=pivotal.vscode-boot-dev-pack[pack de extensiones].
+
+image::vscode-extension-spring-boot.png[]
+
+Pulsaremos en `Install` para incorporar las siguientes extensiones:
+
+* Spring Boot
+* Spring Initializr Java
+* Spring Boot Dashboard
+
+El siguiente paso será abrir la carpeta del proyecto en Visual Studio code. Podemos comprobar que el proyecto se ha cargado correctamente cuando aparezca en los _tabs_ de *JAVA PROJECTS, MAVEN PROJECTS y SPRING BOOT DASHBOARD*.
+
+image::vscode-open-project.png[]
+
 ====
-[source]
+[IMPORTANT]
+Si en la pestaña *PROBLEMS* nos dice que no encuentra un JDK para la versión del proyecto Spring Boot generado, podemos modificarla cambiando la versión en la siguiente linea del pom.xml
+
+[source,xml]
 ----
-<dependency>
-    <groupId>javax.validation</groupId>
-    <artifactId>validation-api</artifactId>
-    <version>2.0.1.Final</version>
+	<properties>
+		<java.version>17</java.version>
+	</properties>
+----
+
+====
+
+Dado que el proyecto va a utilizar validadores para tipos de datos tenemos que incluir la siguiente dependencia en el `pom.xml`.
+
+.Dependencia spring-boot-starter-validation
+====
+[source,xml]
+----
+<dependency> 
+    <groupId>org.springframework.boot</groupId> 
+    <artifactId>spring-boot-starter-validation</artifactId> 
 </dependency>
 ----
 ====
+
 Luego tan solo le damos a finalizar y esperamos a que el proyecto termine el build.
 
-El siguiente paso es configurar la base de datos dentro de el archivo de propiedades del proyecto de SpringBoot mas concretamente en resources, en nuestro caso y dado que contamos con una base de datos PostgreSQL será lo siguiente.
+El siguiente paso es configurar el proyecto Spring Boot. Para ello vamos a modificar su archivo de propiedades que se encuentra en `src/main/resources/application.properties`. Por un lado vamos a configurar la conexión a base de datos con la configuración de nuestro PostgreSQL local. Además vamos a establecer una ruta por defecto a nuestra aplicación.
 
-.Modificamos el archivo `application.properties`.
+.Modificamos el archivo `src/main/resources/application.properties`.
 ====
-image::Eclipse3.png[]
-[source]
+[source,properties]
 ----
-server.servlet.context-path=/api
-spring.datasource.url=jdbc:postgresql://localhost:5432/db
-spring.datasource.username=user
-spring.datasource.password=pass
-spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults = false
-spring.jpa.database-platform=org.hibernate.dialect.PostgreSQL9Dialect
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
+server.servlet.context-path=/api <1>
+spring.datasource.url=jdbc:postgresql://localhost:5432/db <2>
+spring.datasource.username=user <2>
+spring.datasource.password=pass <2>
+spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults = false <2>
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQL9Dialect <2>
+spring.jpa.hibernate.ddl-auto=update <3>
+spring.jpa.show-sql=true <4>
 ----
+<1> Ruta por defecto de la aplicación
+<2> Datos de conexión a la base de datos
+<3> Creación automática de las tablas de la base de datos
+<4> Mostrar las consultas sql en el log
 ====
 
-
-
-El siguiente paso que vamos a hacer es crear una clase de tipo POJO (Plain Old Java Object) la cual representará una tabla de la base de datos en la cual podremos ciertas anotaciones que permitan definir las propiedades para Spring Data JPA.
+El siguiente paso que vamos a hacer una entidad (Entity). Estas clases son de tipo POJO (Plain Old Java Object) y representan objetos que se guardarán en la base de datos. Además podemos utilizar ciertas anotaciones que permitan establecer configuracion o restricciones sobre las propiedades/campos.
 
 .Creacion del archivo POJO `User.java`.
 ====
 [source,java]
 ----
-package ual.dra.rest;
-import java.io.Serializable;
-import javax.persistence.Column;
+package com.example.demo.entity;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
 
-@Entity
-@Table(name = "users")
-public class User implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Entity <1>
+@Table(name = "users") <2>
+public class User {
 
-    @NotNull
-    @Size(max = 65)
-    @Column(name = "first_name")
-    private String firstName;
+    @Id <3>
+    @GeneratedValue(strategy = GenerationType.AUTO) <4>
+    private long id;
 
-    @Size(max = 65)
-    @Column(name = "last_name")
-    private String lastName;
+    @NotBlank(message = "Name is mandatory") <5>
+    private String name;
 
-    @NotNull
-    @Email
-    @Size(max = 100)
-    @Column(unique = true)
+    @NotBlank(message = "Email is mandatory")
+    @Email <6>
     private String email;
 
-    @NotNull
-    @Size(max = 128)
-    private String password;
-
-    // Hibernate requires a no-arg constructor
-    public User() {
-
-    }
-    public User(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(String name, String email) {
+        this.name = name;
         this.email = email;
-        this.password = password;
     }
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getFirstName() {
-		return firstName;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	public String getEmail() {
-		return email;
-	}
-public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", name=" + name + ", email=" + email + "]";
+    }
+
 }
 ----
+<1> Se marca la clase como entidad
+<2> Establecemos el nombre de la tabla en base de datos
+<3> Esta propiedad se marca como clave primaria
+<4> Selección de la estratégia de clave primaria. En este caso un autonumérico
+<5> Validador de campos no vacios
+<6> Validador de email
 ====
 
-Como veis hemos creado una clase user con los campos nombre, apellido, email y password. Y la hemos anotado con ciertos decoradores, sería interesante que investigaseis mas acerca de los decoradores de JPA y Spring en general.
+Como veis hemos creado una clase User con los campos id, name y email. Además la hemos anotado con ciertas anotaciones o decoradores de JPA. Para más información sobre anotaciones de validación https://reflectoring.io/bean-validation-with-spring-boot/.
 
-Por último para la realización de este pequeño ejemplo vamos a crear un archivo que será la base de la creación de nuestra API Rest y donde se produce la magia de SpringBoot. Para ello crearemos el siguiente archivo.
+Por último para la realización de este pequeño ejemplo vamos a crear un archivo que será la base de la creación de nuestra API Rest y donde podemos apreciar la potencia de Spring Boot. Para ello crearemos el siguiente archivo.
 
-.Creamos archivo de Interface `UserRepository.java`.
+.Creamos archivo de Interfaz `UserRepository.java`.
 ====
-image::Eclipse4.png[]
 [source,java]
 ----
-package ual.dra.rest;
+package com.example.demo.repository;
+
+import com.example.demo.entity.User;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-@RepositoryRestResource()
-public interface UserRepository extends CrudRepository<User, Long> {
-
+@RepositoryRestResource <1>
+public interface UserRepository extends CrudRepository<User, Long> { <2>
 
 }
 ----
+<1> Esta anotación genera las operaciones REST básicas sobre un repositorio
+<2> La anotación `CrudRepository` genera todas las operaciones CRUD básicas del patrón `repository` utilizando la entidad `User` sabiendo que la clave primaria es un `Long`.
 ====
+
+////
 
 Por último iremos a RestApplication.java y anotaremos la clase de la siguiente manera.
 
@@ -307,19 +340,54 @@ public class RestApplication {
 ----
 ====
 
+////
+
+Para lanzar la aplicación podemos utilizar la pestaña *SPRING BOOT DASHBOARD* e iniciarla en modo normal o depuración.
+
+image::vscode-launch-spring.png[]
 
 [NOTE]
 ====
-Cada vez que modifiquéis algo es interesante que hagáis un RunAs “Maven Clean” y un RunAs “Maven Install” para que recompileis el proyecto.
+Si veis que las modificaciones sobre las clases no se aplican, podeis hacer un `maven clean` para recompilar el proyecto.
 ====
 
-Para lanzar la API nos basta con lanzar la aplicación como si fuese una app de consola, lo único que cuando nos de a elegir la clase con la que debemos lanzar la aplicación, la lancemos con RestApplication.
+Como vemos a continuación, nos aparece el log de la aplicación Spring Boot donde vemos la inicialización de los diferentes componentes y las rutas de la aplicación.
 
-image::Eclipse5.png[]
+[source,log]
+----
 
-Como vemos a continuación cuando ejecutamos la aplicación se nos levantan una serie de rutas de manera automática.
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.6.5)
 
-image::EclipseConsola.png[]
+2022-03-25 09:57:19.394  INFO 79314 --- [           main] com.example.demo.DemoApplication         : Starting DemoApplication using Java 17.0.2 on Mac-mini-de-Francisco.local with PID 79314 (/Users/frangar/PSI/DRA/demo/target/classes started by frangar in /Users/frangar/PSI/DRA/demo)
+2022-03-25 09:57:19.396  INFO 79314 --- [           main] com.example.demo.DemoApplication         : No active profile set, falling back to 1 default profile: "default"
+2022-03-25 09:57:19.710  INFO 79314 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-03-25 09:57:19.731  INFO 79314 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 1 JPA repository interfaces.
+2022-03-25 09:57:20.050  INFO 79314 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-03-25 09:57:20.055  INFO 79314 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-25 09:57:20.055  INFO 79314 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.60]
+2022-03-25 09:57:20.106  INFO 79314 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2022-03-25 09:57:20.106  INFO 79314 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 691 ms
+2022-03-25 09:57:20.206  INFO 79314 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-03-25 09:57:20.227  INFO 79314 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.7.Final
+2022-03-25 09:57:20.303  INFO 79314 --- [           main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-03-25 09:57:20.346  INFO 79314 --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL9Dialect
+2022-03-25 09:57:20.478  INFO 79314 --- [           main] org.hibernate.tuple.PojoInstantiator     : HHH000182: No default (no-argument) constructor for class: com.example.demo.entity.User (class must be instantiated by Interceptor)
+2022-03-25 09:57:20.584  INFO 79314 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-03-25 09:57:20.697  INFO 79314 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-03-25 09:57:20.745  INFO 79314 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-03-25 09:57:20.748  INFO 79314 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-03-25 09:57:20.786  WARN 79314 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-03-25 09:57:21.328  INFO 79314 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api'
+2022-03-25 09:57:21.334  INFO 79314 --- [           main] com.example.demo.DemoApplication         : Started DemoApplication in 2.095 seconds (JVM running for 2.581)
+2022-03-25 09:58:02.756  INFO 79314 --- [nio-8080-exec-3] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+
+----
 
 Con algo tan sencillo como lo que estáis viendo hemos conseguido levantar una API Rest completamente funcional con todas las funciones CRUD.
 
@@ -339,12 +407,21 @@ image::Postman3.png[]
 
 == Actividades
 
-*	Implementar un método que permita buscar un usuario mediante su apellido. 
+=== Crear servicios REST para la entidad `Hero`
+* Realizar el tutorial para la entidad `Hero` de tal forma que devuelva los datos requeridos por la aplicación del https://ualdra.github.io/angular_101/[Tutorial de Angular].
+
+* Añadir una entidad `Superpoder` de tal forma que un `Hero` tiene una lista de `superpoderes`.
+
+[TIP]
+Buscar como utilizar la anotación `@OneToMany`
+
+=== Crear un endpoint personalizado
+* Implementar un método que permita buscar un usuario mediante su apellido. 
 [TIP]
 Buscar métodos personalizados de JPA Repositories.
-*	Implementar un controlador para generar rutas personalizadas en nuestra API. 
+* Implementar un controlador para generar rutas personalizadas en nuestra API. 
 [TIP]
-@RestController.
+Buscar información sobre `@RestController`.
 
 
 
