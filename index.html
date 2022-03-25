@@ -657,7 +657,7 @@ pre.rouge {
 <h1>SpringBoot</h1>
 <div class="details">
 <span id="author" class="author">Tutorial básico de SpringBoot</span><br>
-<span id="revdate">Manel Mena &lt;manel.mena@ual.es&gt;</span>
+<span id="revdate">Manel Mena &lt;manel.mena@ual.es&gt;; Francisco García &lt;paco.garcia@ual.es&gt;</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Tabla de contenidos</div>
@@ -672,10 +672,16 @@ pre.rouge {
 <ul class="sectlevel2">
 <li><a href="#_aprovisionamiento_de_una_base_de_datos_mediante_docker">2.1. Aprovisionamiento de una base de datos mediante Docker.</a></li>
 <li><a href="#_creación_de_un_proyecto_de_springboot">2.2. Creación de un proyecto de SpringBoot</a></li>
-<li><a href="#_probando_nuestra_api_rest">2.3. Probando nuestra API Rest</a></li>
+<li><a href="#_configuración_de_visual_studio_code">2.3. Configuración de Visual Studio Code</a></li>
+<li><a href="#_probando_nuestra_api_rest">2.4. Probando nuestra API Rest</a></li>
 </ul>
 </li>
-<li><a href="#_actividades">3. Actividades</a></li>
+<li><a href="#_actividades">3. Actividades</a>
+<ul class="sectlevel2">
+<li><a href="#_crear_servicios_rest_para_la_entidad_hero">3.1. Crear servicios REST para la entidad <code>Hero</code></a></li>
+<li><a href="#_crear_un_endpoint_personalizado">3.2. Crear un endpoint personalizado</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -712,7 +718,7 @@ pre.rouge {
 <h2 id="_introducción">1. Introducción</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Spring es un framework de Java que permite el desarrollo de aplicaciones web eficientes manteniendo un patrón MVC, hoy en día es el framework mas utilizado en JAVA según el Developer Survey de StackOverflow 2017. A su vez, se ofrecen innumerables ofertas de trabajo a la gente que domina este framework, dado que en el mundo empresarial también es uno de los mas utilizados dentro de tecnologías de desarrollo basadas en JAVA, y nos guste mas o menos JAVA sigue siendo el lenguaje orientado a objetos mas utilizado.</p>
+<p>Spring es un framework de Java que permite el desarrollo de aplicaciones web eficientes manteniendo un patrón MVC, hoy en día es el framework mas utilizado en JAVA según el Developer Survey de StackOverflow 2021. A su vez, se ofrecen innumerables ofertas de trabajo a la gente que domina este framework, dado que en el mundo empresarial también es uno de los mas utilizados dentro de tecnologías de desarrollo basadas en JAVA, y nos guste mas o menos JAVA sigue siendo el lenguaje orientado a objetos mas utilizado.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -747,10 +753,10 @@ pre.rouge {
 <div class="ulist">
 <ul>
 <li>
-<p>JAVA 1.8.</p>
+<p>JAVA 11.</p>
 </li>
 <li>
-<p>Eclipse EE.</p>
+<p>Visual Studio Code.</p>
 </li>
 <li>
 <p>PostgreSQL (o cualquier otra base de datos SQL).</p>
@@ -854,43 +860,172 @@ pre.rouge {
 <div class="paragraph">
 <p>Para crear un proyecto con todas las configuraciones predefinidas vamos a entrar en la página <a href="https://start.spring.io">start.spring.io</a> y poned las configuraciones que salen a continuación para añadir los paquetes solo tendréis que poner sus nombres en el campo de “Search for dependencies”.</p>
 </div>
+<div class="exampleblock">
+<div class="title">Example 1. Iniciando un proyecto Spring Boot</div>
+<div class="content">
 <div class="imageblock">
 <div class="content">
 <img src="./images/SpringInit.png" alt="SpringInit">
 </div>
 </div>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Pulsamos en <strong>ADD DEPENDENCIES</strong> para buscar y añadir las siguientes dependencias:</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Spring Web</dt>
+<dd>
+<p>Permite construir aplicaciones web utilizando un contenedor Apache Tomcat.</p>
+</dd>
+<dt class="hdlist1">Spring Data JPA</dt>
+<dd>
+<p>Soporte de persistencia de datos en SQL mediante Java Persistence API con Spring Data and Hibernate.</p>
+</dd>
+<dt class="hdlist1">Rest Repositories</dt>
+<dd>
+<p>Exponer los repositorios de Spring Data mediante REST usando Spring Data REST.</p>
+</dd>
+<dt class="hdlist1">PostgreSQL Driver</dt>
+<dd>
+<p>Driver JDBC y R2DBC driver para conectar a una base de datos PostgreSQL.</p>
+</dd>
+</dl>
+</div>
+</li>
+<li>
+<p>Una vez seleccionemos las dependencias pulsaremos en <strong>GENERATE</strong> para descargar un .zip con nuestro proyecto, el cual se puede extraer en el directorio que queramos.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuración_de_visual_studio_code">2.3. Configuración de Visual Studio Code</h3>
 <div class="paragraph">
-<p>Una vez seleccionemos las dependencias pulsaremos “Generate Project” esto hará que se descargue un .zip con nuestro proyecto, el cual descomprimiremos donde nos venga en gana.</p>
+<p>Para trabajar con Spring Boot en <a href="https://code.visualstudio.com/download">Visual Studio Code</a> vamos a instalar un conjunto de extensiones que nos hagan más facil la vida.</p>
 </div>
 <div class="paragraph">
-<p>El siguiente paso será abrir nuestro eclipseEE e importar el proyecto descargado, para ello seleccionamos la opción de importar proyecto maven ya existente.</p>
+<p>Para ello visitamos la página <a href="https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack" class="bare">https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack</a> para instalar el Extension Pack for Java.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Eclipse1.png" alt="Eclipse1">
+<img src="./images/vscode-extension-java.png" alt="vscode extension java">
 </div>
 </div>
 <div class="paragraph">
-<p>A continuación, seleccionamos la carpeta donde tengamos el proyecto, acto seguido nos aparecerá el pom del proyecto que creamos en la página de Spring.</p>
+<p>Pulsaremos en <code>Install</code> para incorporar las siguientes extensiones:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Language Support for Java™ by Red Hat</p>
+</li>
+<li>
+<p>Debugger for Java</p>
+</li>
+<li>
+<p>Test Runner for Java</p>
+</li>
+<li>
+<p>Maven for Java</p>
+</li>
+<li>
+<p>Project Manager for Java</p>
+</li>
+<li>
+<p>Visual Studio IntelliCode</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Una vez instalada nos aparece la ventana de <em>Get Started</em> donde podemos instalar una versión de JDK si no tenemos ya una.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Se recomienda instalar una <strong>versión igual o superior a JDK 11</strong>
+</td>
+</tr>
+</table>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Eclipse2.png" alt="Eclipse2">
+<img src="./images/vscode-install-jdk.png" alt="vscode install jdk">
 </div>
 </div>
 <div class="paragraph">
-<p>Dado que el proyecto utiliza validadores para tipos de datos de JAVAX tenemos que incluir esa dependencia en el <code>pom.xml</code>.</p>
+<p>También necesitaremos instalar el soporte para Spring Boot mediante el siguiente <a href="https://marketplace.visualstudio.com/items?itemName=pivotal.vscode-boot-dev-pack">pack de extensiones</a>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/vscode-extension-spring-boot.png" alt="vscode extension spring boot">
+</div>
+</div>
+<div class="paragraph">
+<p>Pulsaremos en <code>Install</code> para incorporar las siguientes extensiones:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Spring Boot</p>
+</li>
+<li>
+<p>Spring Initializr Java</p>
+</li>
+<li>
+<p>Spring Boot Dashboard</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>El siguiente paso será abrir la carpeta del proyecto en Visual Studio code. Podemos comprobar que el proyecto se ha cargado correctamente cuando aparezca en los <em>tabs</em> de <strong>JAVA PROJECTS, MAVEN PROJECTS y SPRING BOOT DASHBOARD</strong>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/vscode-open-project.png" alt="vscode open project">
+</div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 1. Dependencia javax.validation.</div>
+<div class="content">
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+Si en la pestaña <strong>PROBLEMS</strong> nos dice que no encuentra un JDK para la versión del proyecto Spring Boot generado, podemos modificarla cambiando la versión en la siguiente linea del pom.xml
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="xml">	<span class="nt">&lt;properties&gt;</span>
+		<span class="nt">&lt;java.version&gt;</span>17<span class="nt">&lt;/java.version&gt;</span>
+	<span class="nt">&lt;/properties&gt;</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Dado que el proyecto va a utilizar validadores para tipos de datos tenemos que incluir la siguiente dependencia en el <code>pom.xml</code>.</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 2. Dependencia spring-boot-starter-validation</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>&lt;dependency&gt;
-    &lt;groupId&gt;javax.validation&lt;/groupId&gt;
-    &lt;artifactId&gt;validation-api&lt;/artifactId&gt;
-    &lt;version&gt;2.0.1.Final&lt;/version&gt;
-&lt;/dependency&gt;</code></pre>
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-validation<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span></code></pre>
 </div>
 </div>
 </div>
@@ -899,177 +1034,177 @@ pre.rouge {
 <p>Luego tan solo le damos a finalizar y esperamos a que el proyecto termine el build.</p>
 </div>
 <div class="paragraph">
-<p>El siguiente paso es configurar la base de datos dentro de el archivo de propiedades del proyecto de SpringBoot mas concretamente en resources, en nuestro caso y dado que contamos con una base de datos PostgreSQL será lo siguiente.</p>
+<p>El siguiente paso es configurar el proyecto Spring Boot. Para ello vamos a modificar su archivo de propiedades que se encuentra en <code>src/main/resources/application.properties</code>. Por un lado vamos a configurar la conexión a base de datos con la configuración de nuestro PostgreSQL local. Además vamos a establecer una ruta por defecto a nuestra aplicación.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 2. Modificamos el archivo <code>application.properties</code>.</div>
+<div class="title">Example 3. Modificamos el archivo <code>src/main/resources/application.properties</code>.</div>
 <div class="content">
-<div class="imageblock">
-<div class="content">
-<img src="./images/Eclipse3.png" alt="Eclipse3">
-</div>
-</div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>server.servlet.context-path=/api
-spring.datasource.url=jdbc:postgresql://localhost:5432/db
-spring.datasource.username=user
-spring.datasource.password=pass
-spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults = false
-spring.jpa.database-platform=org.hibernate.dialect.PostgreSQL9Dialect
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true</code></pre>
+<pre class="rouge highlight"><code data-lang="properties"><span class="py">server.servlet.context-path</span><span class="p">=</span><span class="s">/api </span><b class="conum">(1)</b>
+<span class="py">spring.datasource.url</span><span class="p">=</span><span class="s">jdbc:postgresql://localhost:5432/db </span><b class="conum">(2)</b>
+<span class="py">spring.datasource.username</span><span class="p">=</span><span class="s">user </span><b class="conum">(2)</b>
+<span class="py">spring.datasource.password</span><span class="p">=</span><span class="s">pass </span><b class="conum">(2)</b>
+<span class="py">spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults</span> <span class="p">=</span> <span class="s">false </span><b class="conum">(2)</b>
+<span class="py">spring.jpa.database-platform</span><span class="p">=</span><span class="s">org.hibernate.dialect.PostgreSQL9Dialect </span><b class="conum">(2)</b>
+<span class="py">spring.jpa.hibernate.ddl-auto</span><span class="p">=</span><span class="s">update </span><b class="conum">(3)</b>
+<span class="py">spring.jpa.show-sql</span><span class="p">=</span><span class="s">true </span><b class="conum">(4)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Ruta por defecto de la aplicación</p>
+</li>
+<li>
+<p>Datos de conexión a la base de datos</p>
+</li>
+<li>
+<p>Creación automática de las tablas de la base de datos</p>
+</li>
+<li>
+<p>Mostrar las consultas sql en el log</p>
+</li>
+</ol>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>El siguiente paso que vamos a hacer es crear una clase de tipo POJO (Plain Old Java Object) la cual representará una tabla de la base de datos en la cual podremos ciertas anotaciones que permitan definir las propiedades para Spring Data JPA.</p>
+<p>El siguiente paso que vamos a hacer una entidad (Entity). Estas clases son de tipo POJO (Plain Old Java Object) y representan objetos que se guardarán en la base de datos. Además podemos utilizar ciertas anotaciones que permitan establecer configuracion o restricciones sobre las propiedades/campos.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 3. Creacion del archivo POJO <code>User.java</code>.</div>
+<div class="title">Example 4. Creacion del archivo POJO <code>User.java</code>.</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">ual.dra.rest</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.io.Serializable</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.persistence.Column</span><span class="o">;</span>
+<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">com.example.demo.entity</span><span class="o">;</span>
+
 <span class="kn">import</span> <span class="nn">javax.persistence.Entity</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.persistence.GeneratedValue</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.persistence.GenerationType</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.persistence.Id</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.persistence.Table</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.validation.constraints.Email</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.validation.constraints.NotNull</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.validation.constraints.Size</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.validation.constraints.NotBlank</span><span class="o">;</span>
 
-<span class="nd">@Entity</span>
-<span class="nd">@Table</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"users"</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="kd">implements</span> <span class="nc">Serializable</span> <span class="o">{</span>
-    <span class="nd">@Id</span>
-    <span class="nd">@GeneratedValue</span><span class="o">(</span><span class="n">strategy</span> <span class="o">=</span> <span class="nc">GenerationType</span><span class="o">.</span><span class="na">IDENTITY</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">;</span>
+<span class="nd">@Entity</span> <b class="conum">(1)</b>
+<span class="nd">@Table</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"users"</span><span class="o">)</span> <b class="conum">(2)</b>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="o">{</span>
 
-    <span class="nd">@NotNull</span>
-    <span class="nd">@Size</span><span class="o">(</span><span class="n">max</span> <span class="o">=</span> <span class="mi">65</span><span class="o">)</span>
-    <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"first_name"</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="nc">String</span> <span class="n">firstName</span><span class="o">;</span>
+    <span class="nd">@Id</span> <b class="conum">(3)</b>
+    <span class="nd">@GeneratedValue</span><span class="o">(</span><span class="n">strategy</span> <span class="o">=</span> <span class="nc">GenerationType</span><span class="o">.</span><span class="na">AUTO</span><span class="o">)</span> <b class="conum">(4)</b>
+    <span class="kd">private</span> <span class="kt">long</span> <span class="n">id</span><span class="o">;</span>
 
-    <span class="nd">@Size</span><span class="o">(</span><span class="n">max</span> <span class="o">=</span> <span class="mi">65</span><span class="o">)</span>
-    <span class="nd">@Column</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"last_name"</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="nc">String</span> <span class="n">lastName</span><span class="o">;</span>
+    <span class="nd">@NotBlank</span><span class="o">(</span><span class="n">message</span> <span class="o">=</span> <span class="s">"Name is mandatory"</span><span class="o">)</span> <b class="conum">(5)</b>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
 
-    <span class="nd">@NotNull</span>
-    <span class="nd">@Email</span>
-    <span class="nd">@Size</span><span class="o">(</span><span class="n">max</span> <span class="o">=</span> <span class="mi">100</span><span class="o">)</span>
-    <span class="nd">@Column</span><span class="o">(</span><span class="n">unique</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
+    <span class="nd">@NotBlank</span><span class="o">(</span><span class="n">message</span> <span class="o">=</span> <span class="s">"Email is mandatory"</span><span class="o">)</span>
+    <span class="nd">@Email</span> <b class="conum">(6)</b>
     <span class="kd">private</span> <span class="nc">String</span> <span class="n">email</span><span class="o">;</span>
 
-    <span class="nd">@NotNull</span>
-    <span class="nd">@Size</span><span class="o">(</span><span class="n">max</span> <span class="o">=</span> <span class="mi">128</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="nc">String</span> <span class="n">password</span><span class="o">;</span>
-
-    <span class="c1">// Hibernate requires a no-arg constructor</span>
-    <span class="kd">public</span> <span class="nf">User</span><span class="o">()</span> <span class="o">{</span>
-
-    <span class="o">}</span>
-    <span class="kd">public</span> <span class="nf">User</span><span class="o">(</span><span class="nc">String</span> <span class="n">firstName</span><span class="o">,</span> <span class="nc">String</span> <span class="n">lastName</span><span class="o">,</span> <span class="nc">String</span> <span class="n">email</span><span class="o">,</span> <span class="nc">String</span> <span class="n">password</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">firstName</span> <span class="o">=</span> <span class="n">firstName</span><span class="o">;</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">lastName</span> <span class="o">=</span> <span class="n">lastName</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nf">User</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">String</span> <span class="n">email</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
         <span class="k">this</span><span class="o">.</span><span class="na">email</span> <span class="o">=</span> <span class="n">email</span><span class="o">;</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">password</span> <span class="o">=</span> <span class="n">password</span><span class="o">;</span>
     <span class="o">}</span>
-	<span class="kd">public</span> <span class="nc">Long</span> <span class="nf">getId</span><span class="o">()</span> <span class="o">{</span>
-		<span class="k">return</span> <span class="n">id</span><span class="o">;</span>
-	<span class="o">}</span>
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setId</span><span class="o">(</span><span class="nc">Long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
-		<span class="k">this</span><span class="o">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="o">;</span>
-	<span class="o">}</span>
-	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getFirstName</span><span class="o">()</span> <span class="o">{</span>
-		<span class="k">return</span> <span class="n">firstName</span><span class="o">;</span>
-	<span class="o">}</span>
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setFirstName</span><span class="o">(</span><span class="nc">String</span> <span class="n">firstName</span><span class="o">)</span> <span class="o">{</span>
-		<span class="k">this</span><span class="o">.</span><span class="na">firstName</span> <span class="o">=</span> <span class="n">firstName</span><span class="o">;</span>
-	<span class="o">}</span>
-	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getLastName</span><span class="o">()</span> <span class="o">{</span>
-		<span class="k">return</span> <span class="n">lastName</span><span class="o">;</span>
-	<span class="o">}</span>
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setLastName</span><span class="o">(</span><span class="nc">String</span> <span class="n">lastName</span><span class="o">)</span> <span class="o">{</span>
-		<span class="k">this</span><span class="o">.</span><span class="na">lastName</span> <span class="o">=</span> <span class="n">lastName</span><span class="o">;</span>
-	<span class="o">}</span>
-	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getEmail</span><span class="o">()</span> <span class="o">{</span>
-		<span class="k">return</span> <span class="n">email</span><span class="o">;</span>
-	<span class="o">}</span>
-<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setEmail</span><span class="o">(</span><span class="nc">String</span> <span class="n">email</span><span class="o">)</span> <span class="o">{</span>
-		<span class="k">this</span><span class="o">.</span><span class="na">email</span> <span class="o">=</span> <span class="n">email</span><span class="o">;</span>
-	<span class="o">}</span>
-	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getPassword</span><span class="o">()</span> <span class="o">{</span>
-		<span class="k">return</span> <span class="n">password</span><span class="o">;</span>
-	<span class="o">}</span>
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setPassword</span><span class="o">(</span><span class="nc">String</span> <span class="n">password</span><span class="o">)</span> <span class="o">{</span>
-		<span class="k">this</span><span class="o">.</span><span class="na">password</span> <span class="o">=</span> <span class="n">password</span><span class="o">;</span>
-	<span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">long</span> <span class="nf">getId</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">id</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setId</span><span class="o">(</span><span class="kt">long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getEmail</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">email</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setEmail</span><span class="o">(</span><span class="nc">String</span> <span class="n">email</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">email</span> <span class="o">=</span> <span class="n">email</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">"User [id="</span> <span class="o">+</span> <span class="n">id</span> <span class="o">+</span> <span class="s">", name="</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">", email="</span> <span class="o">+</span> <span class="n">email</span> <span class="o">+</span> <span class="s">"]"</span><span class="o">;</span>
+    <span class="o">}</span>
+
 <span class="o">}</span></code></pre>
 </div>
 </div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Se marca la clase como entidad</p>
+</li>
+<li>
+<p>Establecemos el nombre de la tabla en base de datos</p>
+</li>
+<li>
+<p>Esta propiedad se marca como clave primaria</p>
+</li>
+<li>
+<p>Selección de la estratégia de clave primaria. En este caso un autonumérico</p>
+</li>
+<li>
+<p>Validador de campos no vacios</p>
+</li>
+<li>
+<p>Validador de email</p>
+</li>
+</ol>
+</div>
 </div>
 </div>
 <div class="paragraph">
-<p>Como veis hemos creado una clase user con los campos nombre, apellido, email y password. Y la hemos anotado con ciertos decoradores, sería interesante que investigaseis mas acerca de los decoradores de JPA y Spring en general.</p>
+<p>Como veis hemos creado una clase User con los campos id, name y email. Además la hemos anotado con ciertas anotaciones o decoradores de JPA. Para más información sobre anotaciones de validación <a href="https://reflectoring.io/bean-validation-with-spring-boot/" class="bare">https://reflectoring.io/bean-validation-with-spring-boot/</a>.</p>
 </div>
 <div class="paragraph">
-<p>Por último para la realización de este pequeño ejemplo vamos a crear un archivo que será la base de la creación de nuestra API Rest y donde se produce la magia de SpringBoot. Para ello crearemos el siguiente archivo.</p>
+<p>Por último para la realización de este pequeño ejemplo vamos a crear un archivo que será la base de la creación de nuestra API Rest y donde podemos apreciar la potencia de Spring Boot. Para ello crearemos el siguiente archivo.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 4. Creamos archivo de Interface <code>UserRepository.java</code>.</div>
+<div class="title">Example 5. Creamos archivo de Interfaz <code>UserRepository.java</code>.</div>
 <div class="content">
-<div class="imageblock">
-<div class="content">
-<img src="./images/Eclipse4.png" alt="Eclipse4">
-</div>
-</div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">ual.dra.rest</span><span class="o">;</span>
+<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">com.example.demo.repository</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.example.demo.entity.User</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">org.springframework.data.repository.CrudRepository</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.data.rest.core.annotation.RepositoryRestResource</span><span class="o">;</span>
 
-<span class="nd">@RepositoryRestResource</span><span class="o">()</span>
-<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserRepository</span> <span class="kd">extends</span> <span class="nc">CrudRepository</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">,</span> <span class="nc">Long</span><span class="o">&gt;</span> <span class="o">{</span>
-
+<span class="nd">@RepositoryRestResource</span> <b class="conum">(1)</b>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UserRepository</span> <span class="kd">extends</span> <span class="nc">CrudRepository</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">,</span> <span class="nc">Long</span><span class="o">&gt;</span> <span class="o">{</span> <b class="conum">(2)</b>
 
 <span class="o">}</span></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Esta anotación genera las operaciones REST básicas sobre un repositorio</p>
+</li>
+<li>
+<p>La anotación <code>CrudRepository</code> genera todas las operaciones CRUD básicas del patrón <code>repository</code> utilizando la entidad <code>User</code> sabiendo que la clave primaria es un <code>Long</code>.</p>
+</li>
+</ol>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>Por último iremos a RestApplication.java y anotaremos la clase de la siguiente manera.</p>
+<p>Para lanzar la aplicación podemos utilizar la pestaña <strong>SPRING BOOT DASHBOARD</strong> e iniciarla en modo normal o depuración.</p>
 </div>
-<div class="exampleblock">
-<div class="title">Example 5. Modificamos archivo principal de la aplicacion <code>RestApplication.java</code>.</div>
+<div class="imageblock">
 <div class="content">
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">ual.dra.rest</span><span class="o">;</span>
-
-
-<span class="kn">import</span> <span class="nn">org.springframework.boot.SpringApplication</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.domain.EntityScan</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.data.jpa.repository.config.EnableJpaRepositories</span><span class="o">;</span>
-
-<span class="nd">@SpringBootApplication</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RestApplication</span> <span class="o">{</span>
-
-
-	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-		<span class="nc">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="nc">RestApplication</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
-	<span class="o">}</span>
-<span class="o">}</span></code></pre>
-</div>
-</div>
+<img src="./images/vscode-launch-spring.png" alt="vscode launch spring">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -1080,26 +1215,47 @@ spring.jpa.show-sql=true</code></pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Cada vez que modifiquéis algo es interesante que hagáis un RunAs “Maven Clean” y un RunAs “Maven Install” para que recompileis el proyecto.</p>
+<p>Si veis que las modificaciones sobre las clases no se aplican, podeis hacer un <code>maven clean</code> para recompilar el proyecto.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Para lanzar la API nos basta con lanzar la aplicación como si fuese una app de consola, lo único que cuando nos de a elegir la clase con la que debemos lanzar la aplicación, la lancemos con RestApplication.</p>
+<p>Como vemos a continuación, nos aparece el log de la aplicación Spring Boot donde vemos la inicialización de los diferentes componentes y las rutas de la aplicación.</p>
 </div>
-<div class="imageblock">
+<div class="listingblock">
 <div class="content">
-<img src="./images/Eclipse5.png" alt="Eclipse5">
-</div>
-</div>
-<div class="paragraph">
-<p>Como vemos a continuación cuando ejecutamos la aplicación se nos levantan una serie de rutas de manera automática.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="./images/EclipseConsola.png" alt="EclipseConsola">
+<pre class="rouge highlight"><code data-lang="log">  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.6.5)
+
+2022-03-25 09:57:19.394  INFO 79314 --- [           main] com.example.demo.DemoApplication         : Starting DemoApplication using Java 17.0.2 on Mac-mini-de-Francisco.local with PID 79314 (/Users/frangar/PSI/DRA/demo/target/classes started by frangar in /Users/frangar/PSI/DRA/demo)
+2022-03-25 09:57:19.396  INFO 79314 --- [           main] com.example.demo.DemoApplication         : No active profile set, falling back to 1 default profile: "default"
+2022-03-25 09:57:19.710  INFO 79314 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-03-25 09:57:19.731  INFO 79314 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 1 JPA repository interfaces.
+2022-03-25 09:57:20.050  INFO 79314 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-03-25 09:57:20.055  INFO 79314 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-25 09:57:20.055  INFO 79314 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.60]
+2022-03-25 09:57:20.106  INFO 79314 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2022-03-25 09:57:20.106  INFO 79314 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 691 ms
+2022-03-25 09:57:20.206  INFO 79314 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-03-25 09:57:20.227  INFO 79314 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.7.Final
+2022-03-25 09:57:20.303  INFO 79314 --- [           main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-03-25 09:57:20.346  INFO 79314 --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL9Dialect
+2022-03-25 09:57:20.478  INFO 79314 --- [           main] org.hibernate.tuple.PojoInstantiator     : HHH000182: No default (no-argument) constructor for class: com.example.demo.entity.User (class must be instantiated by Interceptor)
+2022-03-25 09:57:20.584  INFO 79314 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-03-25 09:57:20.697  INFO 79314 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-03-25 09:57:20.745  INFO 79314 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-03-25 09:57:20.748  INFO 79314 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-03-25 09:57:20.786  WARN 79314 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-03-25 09:57:21.328  INFO 79314 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api'
+2022-03-25 09:57:21.334  INFO 79314 --- [           main] com.example.demo.DemoApplication         : Started DemoApplication in 2.095 seconds (JVM running for 2.581)
+2022-03-25 09:58:02.756  INFO 79314 --- [nio-8080-exec-3] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1107,7 +1263,7 @@ spring.jpa.show-sql=true</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_probando_nuestra_api_rest">2.3. Probando nuestra API Rest</h3>
+<h3 id="_probando_nuestra_api_rest">2.4. Probando nuestra API Rest</h3>
 <div class="paragraph">
 <p>El ultimo paso va a ser probarlo, para ello vamos a utilizar POSTMAN pero podéis usar cualquier programa que sirva para testear APIs Rest. Por defecto Spring Boot te va a generar una serie de métodos y rutas que cubren la funcionalidad CRUD de la entidad que hayamos creado, esas Rutas se pueden personalizar con el uso de controladores dentro de nuestra aplicación de Spring. No obstante nosotros para ver si funciona o no vamos a usar los métodos de la API tal y como están definidos por defecto. Al entrar en <a href="http://localhost:8080/api" class="bare">http://localhost:8080/api</a> vemos las rutas definidas en nuestra API.</p>
 </div>
@@ -1138,6 +1294,33 @@ spring.jpa.show-sql=true</code></pre>
 <div class="sect1">
 <h2 id="_actividades">3. Actividades</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_crear_servicios_rest_para_la_entidad_hero">3.1. Crear servicios REST para la entidad <code>Hero</code></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Realizar el tutorial para la entidad <code>Hero</code> de tal forma que devuelva los datos requeridos por la aplicación del <a href="https://ualdra.github.io/angular_101/">Tutorial de Angular</a>.</p>
+</li>
+<li>
+<p>Añadir una entidad <code>Superpoder</code> de tal forma que un <code>Hero</code> tiene una lista de <code>superpoderes</code>.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+Buscar como utilizar la anotación <code>@OneToMany</code>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_crear_un_endpoint_personalizado">3.2. Crear un endpoint personalizado</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1164,7 +1347,7 @@ Buscar métodos personalizados de JPA Repositories.
 <div class="title">Tip</div>
 </td>
 <td class="content">
-@RestController.
+Buscar información sobre <code>@RestController</code>.
 </td>
 </tr>
 </table>
@@ -1175,9 +1358,10 @@ Buscar métodos personalizados de JPA Repositories.
 </div>
 </div>
 </div>
+</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-03-23 18:25:25 UTC
+Last updated 2022-03-25 09:18:34 UTC
 </div>
 </div>
 </body>
