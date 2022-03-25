@@ -1046,7 +1046,7 @@ Si en la pestaña <strong>PROBLEMS</strong> nos dice que no encuentra un JDK par
 <span class="py">spring.datasource.username</span><span class="p">=</span><span class="s">user </span><b class="conum">(2)</b>
 <span class="py">spring.datasource.password</span><span class="p">=</span><span class="s">pass </span><b class="conum">(2)</b>
 <span class="py">spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults</span> <span class="p">=</span> <span class="s">false </span><b class="conum">(2)</b>
-<span class="py">spring.jpa.database-platform</span><span class="p">=</span><span class="s">org.hibernate.dialect.PostgreSQL9Dialect </span><b class="conum">(2)</b>
+<span class="py">spring.jpa.database-platform</span><span class="p">=</span><span class="s">org.hibernate.dialect.PostgreSQLDialect </span><b class="conum">(2)</b>
 <span class="py">spring.jpa.hibernate.ddl-auto</span><span class="p">=</span><span class="s">update </span><b class="conum">(3)</b>
 <span class="py">spring.jpa.show-sql</span><span class="p">=</span><span class="s">true </span><b class="conum">(4)</b></code></pre>
 </div>
@@ -1101,6 +1101,9 @@ Si en la pestaña <strong>PROBLEMS</strong> nos dice que no encuentra un JDK par
     <span class="nd">@NotBlank</span><span class="o">(</span><span class="n">message</span> <span class="o">=</span> <span class="s">"Email is mandatory"</span><span class="o">)</span>
     <span class="nd">@Email</span> <b class="conum">(6)</b>
     <span class="kd">private</span> <span class="nc">String</span> <span class="n">email</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">User</span><span class="o">()</span> <span class="o">{</span>
+    <span class="o">}</span>
 
     <span class="kd">public</span> <span class="nf">User</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">String</span> <span class="n">email</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
@@ -1361,7 +1364,7 @@ Buscar información sobre <code>@RestController</code>.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-03-25 09:18:34 UTC
+Last updated 2022-03-25 17:40:28 UTC
 </div>
 </div>
 </body>

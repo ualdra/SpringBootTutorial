@@ -204,7 +204,7 @@ spring.datasource.url=jdbc:postgresql://localhost:5432/db <2>
 spring.datasource.username=user <2>
 spring.datasource.password=pass <2>
 spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults = false <2>
-spring.jpa.database-platform=org.hibernate.dialect.PostgreSQL9Dialect <2>
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect <2>
 spring.jpa.hibernate.ddl-auto=update <3>
 spring.jpa.show-sql=true <4>
 ----
@@ -244,6 +244,9 @@ public class User {
     @NotBlank(message = "Email is mandatory")
     @Email <6>
     private String email;
+
+    public User() {
+    }
 
     public User(String name, String email) {
         this.name = name;
